@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chief Host Portal - Mecks Prior Interiors</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .box { background: #1e1e1e; padding: 30px; border-radius: 8px; border: 1px solid #D4AF37; width: 350px; box-shadow: 0 4px 15px rgba(212,175,55,0.2); margin: 20px; }
+        h2 { color: #D4AF37; text-align: center; margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
+        textarea { resize: vertical; height: 70px; }
+        button { width: 100%; padding: 12px; background: #D4AF37; color: #121212; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 16px; }
+        button:hover { background: #c19b2e; }
+        a { color: #D4AF37; text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; }
+        .file-label { font-size: 13px; color: #aaa; margin-top: 5px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Chief Host Dashboard</h2>
+        <p style="font-size: 13px; color: #888; text-align: center;">Upload new tiles to live inventory</p>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Tile Name / Model" required>
+            <input type="text" name="price" placeholder="Price (e.g. ₦15,000 per sqm)" required>
+            <input type="text" name="size" placeholder="Size (e.g. 60x60cm, 60x120cm)" required>
+            <textarea name="description" placeholder="Short description (finish, texture, quality)"></textarea>
+            <span class="file-label">Upload Tile Design Image:</span>
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">+ Publish New Tile Design</button>
+        </form>
+        <a href="{{ url_for('index') }}">Return to Home Gallery</a>
+    </div>
+</body>
+</html>
