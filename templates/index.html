@@ -3,75 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mecks Prior Interiors - Luxury Tiles</title>
+    <title>Mecks Prior Interiors - Luxury Tile Store & Gallery</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 0; }
         header { background: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #D4AF37; }
-        h1 { color: #D4AF37; margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .contact-info { color: #aaa; margin-top: 8px; font-size: 16px; }
-        .contact-info span { color: #D4AF37; font-weight: bold; }
-        nav { background: #181818; padding: 10px; text-align: center; border-bottom: 1px solid #333; }
-        nav a { color: #D4AF37; text-decoration: none; margin: 0 15px; font-weight: bold; }
-        nav a:hover { text-decoration: underline; }
+        h1 { color: #D4AF37; margin: 0; font-size: 24px; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .flashes { background: #333; border-left: 4px solid #D4AF37; padding: 10px; margin-bottom: 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); border-color: #D4AF37; }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .card-body { padding: 15px; }
-        .card-title { font-size: 20px; color: #D4AF37; margin-bottom: 5px; }
-        .card-price { font-size: 18px; color: #fff; font-weight: bold; margin-bottom: 5px; }
-        .card-size { font-size: 14px; color: #D4AF37; margin-bottom: 10px; font-weight: bold; }
-        .card-desc { font-size: 14px; color: #bbb; margin-bottom: 15px; }
-        .whatsapp-btn { display: block; background: #25D366; color: white; text-align: center; padding: 10px; border-radius: 4px; text-decoration: none; font-weight: bold; }
-        .whatsapp-btn:hover { background: #20ba5a; }
+        .card-title { font-size: 20px; color: #D4AF37; margin-bottom: 10px; }
+        .card-price { font-size: 16px; color: #fff; margin-bottom: 10px; }
+        .quantity-box { margin: 15px 0; background: #2a2a2a; padding: 10px; border-radius: 5px; }
+        .quantity-box label { display: block; font-size: 14px; margin-bottom: 5px; color: #ccc; }
+        .quantity-box input { width: 100%; padding: 8px; background: #121212; border: 1px solid #444; color: #fff; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+        .total-display { font-weight: bold; color: #D4AF37; margin-top: 8px; font-size: 16px; }
+        .btn-whatsapp { display: block; width: 100%; background: #25D366; color: white; text-align: center; padding: 10px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 15px; box-sizing: border-box; }
+        .btn-whatsapp:hover { background: #20ba5a; }
+        .advisory-section { background: #1a1a1a; border-left: 4px solid #D4AF37; padding: 15px; margin-top: 30px; border-radius: 4px; }
+        .advisory-section h3 { color: #D4AF37; margin-top: 0; }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Mecks Prior Interiors</h1>
-        <div class="contact-info">Call / WhatsApp: <span>+234 812 491 3382</span></div>
+        <p style="color: #aaa; margin: 5px 0 0 0;">Premium Tile Store & Gallery</p>
     </header>
-    <nav>
-        <a href="{{ url_for('index') }}">Home Gallery</a>
-        {% if session.get('user_id') %}
-            {% if session.get('is_admin') %}
-                <a href="{{ url_for('admin') }}">Chief Host Panel</a>
-            {% endif %}
-            <a href="{{ url_for('logout') }}">Logout ({{ session.get('username') }})</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Sign Up</a>
-        {% endif %}
-    </nav>
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flashes">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
 
-        <h2 style="color: #D4AF37; border-bottom: 1px solid #333; padding-bottom: 10px;">Exclusive Tile Designs</h2>
+    <div class="container">
+        <!-- Product Grid Section -->
+        <h2 style="color: #fff; border-bottom: 1px solid #333; padding-bottom: 10px;">Tile Catalog & Estimate Calculator</h2>
         
         <div class="grid">
-            {% for tile in tiles %}
-            <div class="card">
-                <img src="{{ url_for('static', filename='uploads/' + tile['image']) }}" alt="{{ tile['name'] }}">
+            <!-- Sample Product Card 1 -->
+            <div class="card" data-price="15000">
                 <div class="card-body">
-                    <div class="card-title">{{ tile['name'] }}</div>
-                    <div class="card-price">₦{{ tile['price'] }}</div>
-                    <div class="card-size">Size: {{ tile['size'] }}</div>
-                    <div class="card-desc">{{ tile['description'] }}</div>
-                    <a class="whatsapp-btn" href="https://wa.me/2348124913382?text=Hello%2C%20I%20am%20interested%20in%20this%20tile%3A%20{{ tile['name'] }}%20(%20Size%3A%20{{ tile['size'] }}%20)%20priced%20at%20₦{{ tile['price'] }}" target="_blank">Order via WhatsApp</a>
+                    <div class="card-title">Royal Polished Porcelain</div>
+                    <p style="color: #888; font-size: 14px;">Finish: Polished | Use: Indoor Floor</p>
+                    <div class="card-price">Price per sqm: ₦<span class="unit-price">15,000</span></div>
+                    
+                    <!-- Quantity Input (Option 1 Upgrade) -->
+                    <div class="quantity-box">
+                        <label for="qty-1">Enter Quantity (sqm):</label>
+                        <input type="number" id="qty-1" class="item-qty" min="1" value="1" oninput="calculateTotal(this)">
+                        <div class="total-display">Total Estimate: ₦<span class="item-total">15,000</span></div>
+                    </div>
+
+                    <a href="#" class="btn-whatsapp" onclick="orderViaWhatsApp(this)">Connect & Order via WhatsApp</a>
                 </div>
             </div>
-            {% else %}
-            <p style="color: #888;">No tile designs uploaded yet. Chief Host can log in to add products.</p>
-            {% endfor %}
+
+            <!-- Sample Product Card 2 -->
+            <div class="card" data-price="18500">
+                <div class="card-body">
+                    <div class="card-title">Super Rustic Outdoor Tile</div>
+                    <p style="color: #888; font-size: 14px;">Finish: Super Rustic | Use: High Traffic / Outdoor</p>
+                    <div class="card-price">Price per sqm: ₦<span class="unit-price">18,500</span></div>
+                    
+                    <!-- Quantity Input (Option 1 Upgrade) -->
+                    <div class="quantity-box">
+                        <label for="qty-2">Enter Quantity (sqm):</label>
+                        <input type="number" id="qty-2" class="item-qty" min="1" value="1" oninput="calculateTotal(this)">
+                        <div class="total-display">Total Estimate: ₦<span class="item-total">18,500</span></div>
+                    </div>
+
+                    <a href="#" class="btn-whatsapp" onclick="orderViaWhatsApp(this)">Connect & Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advisory Section (From your notes) -->
+        <div class="advisory-section">
+            <h3>Pro Tile Selection Guide</h3>
+            <ul style="margin: 0; padding-left: 20px; color: #ccc; line-height: 1.6;">
+                <li><strong>Material Conservation:</strong> Use small sizes in small dimensions to avoid wasting material.</li>
+                <li><strong>Right Placement:</strong> Always use the right tiles in the right place (e.g., rustic/high-traffic tiles for outdoor spaces) to ensure maximum durability and avoid product failure.</li>
+            </ul>
         </div>
     </div>
+
+    <script>
+        // Real-time calculation script for Option 1
+        function calculateTotal(inputElement) {
+            const card = inputElement.closest('.card');
+            const unitPriceStr = card.querySelector('.unit-price').innerText.replace(/,/g, '');
+            const unitPrice = parseFloat(unitPriceStr);
+            const quantity = parseInt(inputElement.value) || 0;
+            
+            const total = unitPrice * quantity;
+            card.querySelector('.item-total').innerText = total.toLocaleString();
+        }
+
+        function orderViaWhatsApp(element) {
+            const card = element.closest('.card');
+            const title = card.querySelector('.card-title').innerText;
+            const qty = card.querySelector('.item-qty').value;
+            const total = card.querySelector('.item-total').innerText;
+            
+            const message = Hello Mecks Prior Interiors, I want to order ${qty} sqm of ${title}. Total estimate: ₦${total};
+            const encodedMessage = encodeURIComponent(message);
+            element.href = https://wa.me/2340000000000?text=${encodedMessage};
+        }
+    </script>
 </body>
 </html>
