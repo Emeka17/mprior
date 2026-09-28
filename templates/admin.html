@@ -2,33 +2,159 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chief Host Portal - Mecks Prior Interiors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecks Prior Interiors - Admin Panel</title>
     <style>
-        body { font-family: sans-serif; background: #121212; color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .box { background: #1e1e1e; padding: 30px; border-radius: 8px; border: 1px solid #D4AF37; width: 350px; box-shadow: 0 4px 15px rgba(212,175,55,0.2); margin: 20px; }
-        h2 { color: #D4AF37; text-align: center; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
-        textarea { resize: vertical; height: 70px; }
-        button { width: 100%; padding: 12px; background: #D4AF37; color: #121212; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 16px; }
-        button:hover { background: #c19b2e; }
-        a { color: #D4AF37; text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; }
-        .file-label { font-size: 13px; color: #aaa; margin-top: 5px; display: block; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; }
+        header { background: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #D4AF37; display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto; box-sizing: border-box; }
+        h1 { color: #D4AF37; margin: 0; font-size: 22px; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
+        .back-link { color: #D4AF37; text-decoration: none; font-weight: bold; font-size: 14px; }
+        
+        .form-card, .table-card { background: #1e1e1e; border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        h2 { color: #D4AF37; font-size: 18px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 14px; margin-bottom: 6px; color: #bbb; }
+        
+        /* Highlighted Brand Name Field */
+        .brand-group input {
+            background: #2b2500;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .brand-group label {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        input[type="text"], input[type="number"], select, input[type="file"] { width: 100%; padding: 10px; box-sizing: border-box; background: #111; border: 1px solid #444; color: #fff; font-size: 14px; border-radius: 5px; }
+        
+        .btn-submit { background: #D4AF37; color: #121212; border: none; padding: 12px; width: 100%; font-weight: bold; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .btn-submit:hover { background: #c19d30; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; font-size: 14px; }
+        th { color: #D4AF37; background: #252525; }
+        tr:hover { background: #252525; }
+        .thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        .btn-delete { background: #e74c3c; color: #fff; padding: 6px 12px; border: none; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold; }
+        .btn-delete:hover { background: #c0392b; }
+        .empty-text { color: #888; text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>Chief Host Dashboard</h2>
-        <p style="font-size: 13px; color: #888; text-align: center;">Upload new tiles to live inventory</p>
-        <form method="POST" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Tile Name / Model" required>
-            <input type="text" name="price" placeholder="Price (e.g. ₦15,000 per sqm)" required>
-            <input type="text" name="size" placeholder="Size (e.g. 60x60cm, 60x120cm)" required>
-            <textarea name="description" placeholder="Short description (finish, texture, quality)"></textarea>
-            <span class="file-label">Upload Tile Design Image:</span>
-            <input type="file" name="image" accept="image/*" required>
-            <button type="submit">+ Publish New Tile Design</button>
-        </form>
-        <a href="{{ url_for('index') }}">Return to Home Gallery</a>
+
+    <header>
+        <h1>Mecks Prior Admin</h1>
+        <a href="/" class="back-link">&larr; Back to Catalog</a>
+    </header>
+
+    <div class="container">
+        <!-- Add Tile Form -->
+        <div class="form-card">
+            <h2>Add New Tile Design</h2>
+            <form action="/admin/add" method="POST" enctype="multipart/form-data">
+                
+                <!-- Brand Name Field with Distinct Color & Highlight -->
+                <div class="form-group brand-group">
+                    <label>⭐ Brand Name (e.g., Good Will, Royal):</label>
+                    <input type="text" name="brand_name" required placeholder="Type brand name here...">
+                </div>
+
+                <div class="form-group">
+                    <label>Design Name:</label>
+                    <input type="text" name="name" required placeholder="e.g. Carrara Cascade">
+                </div>
+                
+                <div class="form-group">
+                    <label>Category / Finish:</label>
+                    <select name="finish" required>
+                        <option value="Rustic">Rustic</option>
+                        <option value="Polished">Polished</option>
+                        <option value="Super Polished">Super Polished</option>
+                        <option value="Super Rustic">Super Rustic</option>
+                        <option value="Porcelain Unglazed Rustic">Porcelain Unglazed Rustic</option>
+                        <option value="Porcelain Rustic">Porcelain Rustic</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Place of Use:</label>
+                    <select name="use" required>
+                        <option value="Indoor">Indoor</option>
+                        <option value="Outdoor">Outdoor</option>
+                        <option value="High Traffic">High Traffic</option>
+                        <option value="Indoor Wall">Indoor Wall</option>
+                        <option value="Outdoor Wall">Outdoor Wall</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Size / Dimensions:</label>
+                    <input type="text" name="size" required placeholder="e.g. 60x60cm">
+                </div>
+
+                <div class="form-group">
+                    <label>Price per Square Meter (₦):</label>
+                    <input type="number" step="0.01" name="price" required placeholder="e.g. 15500">
+                </div>
+
+                <div class="form-group">
+                    <label>Tile Picture:</label>
+                    <input type="file" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Upload & Save Tile</button>
+            </form>
+        </div>
+
+        <!-- Manage Existing Catalog Table -->
+        <div class="table-card">
+            <h2>Manage Existing Catalog</h2>
+            {% if tiles %}
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Brand Name</th>
+                            <th>Design Name</th>
+                            <th>Finish / Use</th>
+                            <th>Size</th>
+                            <th>Price / sqm</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tile in tiles %}
+                        <tr>
+                            <td>
+                                {% if tile.image %}
+                                <img src="{{ url_for('static', filename='uploads/' + tile.image) }}" class="thumb" alt="">
+                                {% endif %}
+                            </td>
+                            <td><strong style="color: #FFD700; background: #2b2500; padding: 4px 8px; border-radius: 4px; display: inline-block;">{{ tile.brand_name }}</strong></td>
+                            <td>{{ tile.name }}</td>
+                            <td>{{ tile.finish }} <br><span style="color: #aaa; font-size: 12px;">{{ tile.use }}</span></td>
+                            <td>{{ tile.size }}</td>
+                            <td style="color: #25D366; font-weight: bold;">₦{{ "{:,.2f}".format(tile.price|float) }}</td>
+                            <td>
+                                <a href="/admin/delete/{{ tile.id }}" class="btn-delete" onclick="return confirm('Are you sure you want to delete this tile?');">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-text">No tiles uploaded yet. Use the form above to add your first design!</p>
+            {% endif %}
+        </div>
     </div>
+
 </body>
 </html>

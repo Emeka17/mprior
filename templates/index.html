@@ -3,108 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mecks Prior Interiors - Luxury Tile Store & Gallery</title>
+    <title>Mecks Prior Interiors - Luxury Tile Catalog</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; }
         header { background: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #D4AF37; }
         h1 { color: #D4AF37; margin: 0; font-size: 24px; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        
+        /* Filter Bar */
+        .filter-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+        .filter-btn { background: #1e1e1e; color: #D4AF37; border: 1px solid #D4AF37; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .filter-btn.active, .filter-btn:hover { background: #D4AF37; color: #121212; font-weight: bold; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-3px); border-color: #D4AF37; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
         .card-body { padding: 15px; }
-        .card-title { font-size: 20px; color: #D4AF37; margin-bottom: 10px; }
-        .card-price { font-size: 16px; color: #fff; margin-bottom: 10px; }
-        .quantity-box { margin: 15px 0; background: #2a2a2a; padding: 10px; border-radius: 5px; }
-        .quantity-box label { display: block; font-size: 14px; margin-bottom: 5px; color: #ccc; }
-        .quantity-box input { width: 100%; padding: 8px; background: #121212; border: 1px solid #444; color: #fff; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
-        .total-display { font-weight: bold; color: #D4AF37; margin-top: 8px; font-size: 16px; }
-        .btn-whatsapp { display: block; width: 100%; background: #25D366; color: white; text-align: center; padding: 10px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 15px; box-sizing: border-box; }
+        .card-title { font-size: 18px; color: #D4AF37; margin-bottom: 8px; font-weight: bold; }
+        .card-info { font-size: 13px; color: #aaa; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .card-price { font-size: 16px; color: #25D366; margin-top: 10px; font-weight: bold; border-top: 1px solid #333; padding-top: 8px; }
+        .admin-link { display: inline-block; margin: 15px 0; color: #D4AF37; text-decoration: none; font-weight: bold; }
+
+        /* Modal Popup Styling */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
+        .modal-content { background: #1e1e1e; border: 1px solid #D4AF37; border-radius: 12px; max-width: 500px; width: 100%; overflow: hidden; position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.7); max-height: 90vh; display: flex; flex-direction: column; }
+        .modal-header { background: #252525; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
+        .modal-title { color: #D4AF37; font-size: 18px; font-weight: bold; margin: 0; }
+        .close-btn { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 20px; overflow-y: auto; }
+        .modal-img { width: 100%; height: 260px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .modal-details { font-size: 14px; color: #bbb; margin-bottom: 15px; line-height: 1.5; }
+        .modal-price { font-size: 18px; color: #fff; margin-bottom: 15px; font-weight: bold; }
+        .quantity-box { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .quantity-box label { display: block; font-size: 14px; margin-bottom: 8px; color: #bbb; }
+        .quantity-box input { width: 100%; padding: 10px; box-sizing: border-box; background: #111; border: 1px solid #444; color: #fff; font-size: 16px; border-radius: 4px; }
+        .total-display { font-weight: bold; color: #25D366; font-size: 18px; margin-top: 10px; }
+        .btn-whatsapp { display: block; width: 100%; padding: 12px; background: #25D366; color: #fff; text-align: center; text-decoration: none; font-weight: bold; border-radius: 5px; box-sizing: border-box; margin-top: 15px; }
         .btn-whatsapp:hover { background: #20ba5a; }
-        .advisory-section { background: #1a1a1a; border-left: 4px solid #D4AF37; padding: 15px; margin-top: 30px; border-radius: 4px; }
-        .advisory-section h3 { color: #D4AF37; margin-top: 0; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Mecks Prior Interiors</h1>
-        <p style="color: #aaa; margin: 5px 0 0 0;">Premium Tile Store & Gallery</p>
+        <p style="margin: 5px 0 0; color: #aaa; font-size: 14px;">Luxury Tile Catalog</p>
+        <a href="/admin" class="admin-link">Admin Panel Login</a>
     </header>
 
     <div class="container">
-        <!-- Product Grid Section -->
-        <h2 style="color: #fff; border-bottom: 1px solid #333; padding-bottom: 10px;">Tile Catalog & Estimate Calculator</h2>
+        <p style="text-align: center; color: #aaa; margin-bottom: 20px;">Tap any tile to view full picture, specifications, and calculate square meter pricing.</p>
         
-        <div class="grid">
-            <!-- Sample Product Card 1 -->
-            <div class="card" data-price="15000">
-                <div class="card-body">
-                    <div class="card-title">Royal Polished Porcelain</div>
-                    <p style="color: #888; font-size: 14px;">Finish: Polished | Use: Indoor Floor</p>
-                    <div class="card-price">Price per sqm: ₦<span class="unit-price">15,000</span></div>
-                    
-                    <!-- Quantity Input (Option 1 Upgrade) -->
-                    <div class="quantity-box">
-                        <label for="qty-1">Enter Quantity (sqm):</label>
-                        <input type="number" id="qty-1" class="item-qty" min="1" value="1" oninput="calculateTotal(this)">
-                        <div class="total-display">Total Estimate: ₦<span class="item-total">15,000</span></div>
-                    </div>
-
-                    <a href="#" class="btn-whatsapp" onclick="orderViaWhatsApp(this)">Connect & Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <!-- Sample Product Card 2 -->
-            <div class="card" data-price="18500">
-                <div class="card-body">
-                    <div class="card-title">Super Rustic Outdoor Tile</div>
-                    <p style="color: #888; font-size: 14px;">Finish: Super Rustic | Use: High Traffic / Outdoor</p>
-                    <div class="card-price">Price per sqm: ₦<span class="unit-price">18,500</span></div>
-                    
-                    <!-- Quantity Input (Option 1 Upgrade) -->
-                    <div class="quantity-box">
-                        <label for="qty-2">Enter Quantity (sqm):</label>
-                        <input type="number" id="qty-2" class="item-qty" min="1" value="1" oninput="calculateTotal(this)">
-                        <div class="total-display">Total Estimate: ₦<span class="item-total">18,500</span></div>
-                    </div>
-
-                    <a href="#" class="btn-whatsapp" onclick="orderViaWhatsApp(this)">Connect & Order via WhatsApp</a>
-                </div>
-            </div>
+        <!-- Filter Categories -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTiles('all', this)">All Tiles</button>
+            <button class="filter-btn" onclick="filterTiles('Rustic', this)">Rustic</button>
+            <button class="filter-btn" onclick="filterTiles('Polished', this)">Polished</button>
+            <button class="filter-btn" onclick="filterTiles('Super Polished', this)">Super Polished</button>
+            <button class="filter-btn" onclick="filterTiles('Outdoor', this)">Outdoor</button>
+            <button class="filter-btn" onclick="filterTiles('High Traffic', this)">High Traffic</button>
         </div>
 
-        <!-- Advisory Section (From your notes) -->
-        <div class="advisory-section">
-            <h3>Pro Tile Selection Guide</h3>
-            <ul style="margin: 0; padding-left: 20px; color: #ccc; line-height: 1.6;">
-                <li><strong>Material Conservation:</strong> Use small sizes in small dimensions to avoid wasting material.</li>
-                <li><strong>Right Placement:</strong> Always use the right tiles in the right place (e.g., rustic/high-traffic tiles for outdoor spaces) to ensure maximum durability and avoid product failure.</li>
-            </ul>
+        <div class="grid">
+            {% for tile in tiles %}
+            {% set tile_price = tile.price or 0 %}
+            {% set tile_img = url_for('static', filename='uploads/' + tile.image) if tile.image else '' %}
+            
+            <div class="card tile-item" data-category="{{ tile.finish }} {{ tile.use }}" onclick="openModal('{{ tile.name|e }}', '{{ tile_img }}', '{{ tile.finish|e }}', '{{ tile.use|e }}', '{{ tile.size|e }}', '{{ tile_price|float }}')">
+                {% if tile.image %}
+                <img src="{{ tile_img }}" alt="{{ tile.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <div class="card-title">{{ tile.name }}</div>
+                    <div class="card-info"><span>Finish:</span> <strong>{{ tile.finish }}</strong></div>
+                    <div class="card-info"><span>Use:</span> <strong>{{ tile.use }}</strong></div>
+                    <div class="card-info"><span>Size:</span> <strong>{{ tile.size }}</strong></div>
+                    <div class="card-price">₦{{ "{:,.2f}".format(tile_price|float) }} / sqm</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal Popup Component -->
+    <div id="tileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTileName" class="modal-title">Tile Details</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalTileImg" src="" alt="" class="modal-img">
+                <div id="modalTileDetails" class="modal-details"></div>
+                <div id="modalTilePrice" class="modal-price"></div>
+
+                <div class="quantity-box">
+                    <label>Enter Required Quantity (sqm):</label>
+                    <input type="number" id="modalQtyInput" min="1" value="1" oninput="calculateModalTotal()">
+                    <div class="total-display">
+                        Total Cost: ₦<span id="modalTotalCost">0.00</span>
+                    </div>
+                </div>
+
+                <a id="modalWhatsAppBtn" href="#" class="btn-whatsapp" target="_blank">Order via WhatsApp</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // Real-time calculation script for Option 1
-        function calculateTotal(inputElement) {
-            const card = inputElement.closest('.card');
-            const unitPriceStr = card.querySelector('.unit-price').innerText.replace(/,/g, '');
-            const unitPrice = parseFloat(unitPriceStr);
-            const quantity = parseInt(inputElement.value) || 0;
+        let currentUnitPrice = 0;
+        let currentTileName = '';
+        let currentTileSize = '';
+
+        function openModal(name, img, finish, use, size, price) {
+            currentUnitPrice = parseFloat(price) || 0;
+            currentTileName = name;
+            currentTileSize = size;
+
+            document.getElementById('modalTileName').innerText = name;
+            document.getElementById('modalTileImg').src = img;
+            document.getElementById('modalTileDetails').innerHTML = `<strong>Finish:</strong> ${finish}<br><strong>Place of Use:</strong> ${use}<br><strong>Size:</strong> ${size}`;
+            document.getElementById('modalTilePrice').innerHTML = `Price: <strong>₦${currentUnitPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong> per sqm`;
             
-            const total = unitPrice * quantity;
-            card.querySelector('.item-total').innerText = total.toLocaleString();
+            document.getElementById('modalQtyInput').value = 1;
+            calculateModalTotal();
+
+            document.getElementById('tileModal').style.display = 'flex';
         }
 
-        function orderViaWhatsApp(element) {
-            const card = element.closest('.card');
-            const title = card.querySelector('.card-title').innerText;
-            const qty = card.querySelector('.item-qty').value;
-            const total = card.querySelector('.item-total').innerText;
+        function closeModal() {
+            document.getElementById('tileModal').style.display = 'none';
+        }
+
+        function calculateModalTotal() {
+            const qty = parseFloat(document.getElementById('modalQtyInput').value) || 0;
+            const total = currentUnitPrice * qty;
             
-            const message = Hello Mecks Prior Interiors, I want to order ${qty} sqm of ${title}. Total estimate: ₦${total};
-            const encodedMessage = encodeURIComponent(message);
-            element.href = https://wa.me/2340000000000?text=${encodedMessage};
+            document.getElementById('modalTotalCost').innerText = total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const waMsg = encodeURIComponent(`Hello Mecks Prior Interiors, I am interested in ordering ${qty} sqm of ${currentTileName} (${currentTileSize}) for a total of ₦${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}. Please confirm availability.`);
+            document.getElementById('modalWhatsAppBtn').href = `https://wa.me/2348124913382?text=${waMsg}`;
+        }
+
+        function filterTiles(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const items = document.querySelectorAll('.tile-item');
+            items.forEach(item => {
+                const cat = item.getAttribute('data-category').toLowerCase();
+                if (category === 'all' || cat.includes(category.toLowerCase())) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('tileModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
     </script>
+
 </body>
 </html>
