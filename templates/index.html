@@ -52,41 +52,16 @@
 
 
 
-<style id="mecks-mobile-detail-fix">
-  /* PROPER FULL MOBILE OVERLAY FOR TILE DETAILS */
-  .detail-container, .product-detail-modal, #detail-view, .modal, .popup-detail {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #121212 !important;
-    z-index: 999999 !important;
-    overflow-y: auto !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
 
-  /* Make detail elements look neat and spacious on mobile */
-  .detail-container img, .product-detail-modal img, #detail-view img {
+
+
+<style id="mecks-safe-mobile-modal">
+  /* Ensure detail view expands cleanly and behaves well on mobile */
+  .product-detail, .detail-view, #detail-container, .modal-dialog {
+    max-width: 100% !important;
     width: 100% !important;
-    max-width: 400px !important;
-    height: 250px !important;
-    object-fit: cover !important;
-    border-radius: 8px !important;
-  }
-
-  .detail-container h2, .detail-container h3, .detail-container p, .detail-container span {
-    color: #ffffff !important;
-  }
-
-  .detail-container .price, .product-detail-modal .price {
-    color: #2ecc71 !important;
-    font-size: 18px !important;
-    font-weight: bold !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
 </style>
 
