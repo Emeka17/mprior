@@ -45,6 +45,56 @@
 </head>
 <body>
 
+<!-- Master Sticky Search Bar -->
+<div class="search-container" style="padding: 12px 15px; background: #1a1a1a; position: sticky; top: 0; z-index: 1000; text-align: center;">
+  <input type="text" id="tileSearch" onkeyup="filterTiles()" placeholder="Search tiles by name, finish, style..." style="width: 100%; max-width: 600px; padding: 12px 16px; font-size: 16px; border-radius: 8px; border: 2px solid #d4af37; background: #2a2a2a; color: #fff; outline: none;">
+</div>
+
+<style>
+  /* Force filter buttons into a horizontal scrolling row */
+  .filter-container, .categories, .tags-row, .btn-group, div[class*="filter"], div[class*="category"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Force 2-Column Grid Layout */
+  .tiles-container, .row, .gallery, .tile-grid, div[class*="grid"], div[class*="container"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+  }
+
+  .tile-card, .card, div[class*="card"] {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+</style>
+
+<script>
+  function filterTiles() {
+    let input = document.getElementById('tileSearch').value.toLowerCase().trim();
+    let cards = document.querySelectorAll('.tile-card, .card, div[class*="card"]');
+    
+    cards.forEach(card => {
+      let text = card.innerText.toLowerCase();
+      if (input === "" || text.includes(input)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+
+
     <header>
         <h1>Mecks Prior Interiors</h1>
         <p style="margin: 5px 0 0; color: #aaa; font-size: 14px;">Luxury Tile Catalog</p>
@@ -222,9 +272,7 @@
 </script>
 
 <!-- Search Bar HTML -->
-<div class="search-container">
-  <input type="text" id="tileSearch" class="search-input" onkeyup="filterTiles()" placeholder="Search tiles by name, finish, or style...">
-</div>
+
 
 <script>
   // Ensure the main tile listing container uses the 2-column grid class automatically
