@@ -307,6 +307,16 @@
   }
 </script>
 
+
+
+<!-- Dedicated Full-Screen Detail View Container -->
+<div id="full-detail-view">
+  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
+  <div id="detail-content-area"></div>
+</div>
+
+
+
 <style id="jiji-grid-style">
   body {
     background-color: #121212 !important;
@@ -328,7 +338,7 @@
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
-    padding: 5px 0 !important;
+    padding: 5px 0 60px 0 !important;
   }
 
   .tile-card, .card {
@@ -349,43 +359,65 @@
     background: #000 !important;
   }
 
-  /* CATALOG CARD: HIDE FINISH & USE ENTIRELY */
-  .tile-card .finish-info, .tile-card .use-info, 
-  .tile-card p:has-text("Finish"), .tile-card p:has-text("Use"),
-  .tile-card p:has-text("Polished"), .tile-card p:has-text("Indoor"),
-  .tile-card div > p:nth-child(n+2):not(:last-child) {
+  /* STRICTLY HIDE FINISH & USE ON MAIN GRID CARDS */
+  .tile-card p, .tile-card span, .tile-card div {
     display: none !important;
   }
 
-  /* Force Catalog Card Text Colors: Name & Size White, Price Green */
-  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name {
-    color: #ffffff !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
-    padding: 6px 8px 0 8px !important;
-    margin: 0 !important;
+  /* ALLOW ONLY: Name, Size, Price on Main Grid Card */
+  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
+  .tile-card .size, .tile-card .size-text,
+  .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text {
     display: block !important;
   }
 
-  .tile-card .size, .tile-card p.size-text {
+  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
+  .tile-card .size, .tile-card .size-text {
     color: #ffffff !important;
-    font-size: 11px !important;
-    padding: 2px 8px 0 8px !important;
+    font-size: 12px !important;
+    padding: 4px 8px 0 8px !important;
     margin: 0 !important;
-    display: block !important;
   }
 
-  .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text, .tile-card p:last-child {
+  .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text {
     color: #2ecc71 !important;
     font-size: 13px !important;
     font-weight: bold !important;
     padding: 4px 8px 8px 8px !important;
     margin: 0 !important;
-    display: block !important;
   }
 
-  /* TRUE FULL-SCREEN SEPARATE DETAIL VIEW */
-  #full-detail-view {
+  /* FLOATING CART BUTTON (Bottom Right) */
+  #floating-cart-btn {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    background: #d4af37 !important;
+    color: #121212 !important;
+    padding: 12px 20px !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important;
+    z-index: 99998 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    border: none !important;
+  }
+
+  #cart-counter {
+    background: #ffffff !important;
+    color: #121212 !important;
+    padding: 2px 8px !important;
+    border-radius: 50% !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+  }
+
+  /* TRUE FULL-SCREEN VIEWS (Detail & Cart) */
+  .full-screen-view {
     display: none;
     position: fixed !important;
     top: 0 !important;
@@ -399,28 +431,27 @@
     box-sizing: border-box !important;
   }
 
-  #full-detail-view.active {
+  .full-screen-view.active {
     display: block !important;
   }
 
-  #full-detail-view img {
+  .full-screen-view img {
     width: 100% !important;
-    max-height: 300px !important;
+    max-height: 280px !important;
     object-fit: contain !important;
     background: #000 !important;
     border-radius: 8px !important;
     border: 1px solid #333 !important;
   }
 
-  #full-detail-view h2, #full-detail-view h3, #full-detail-view h4 {
+  .full-screen-view h2, .full-screen-view h3 {
     color: #ffffff !important;
     font-size: 18px !important;
     margin-top: 15px !important;
     display: block !important;
   }
 
-  /* Inside detail view, ALL info (Finish, Use, Calculator) is fully visible and styled */
-  #full-detail-view p, #full-detail-view span, #full-detail-view div {
+  .full-screen-view p, .full-screen-view span, .full-screen-view div {
     color: #cccccc !important;
     display: block !important;
     font-size: 14px !important;
@@ -428,12 +459,13 @@
     margin: 6px 0 !important;
   }
 
-  #full-detail-view .price, #full-detail-view span[class*="price"], #full-detail-view p:has-text("₦") {
+  .full-screen-view .price, .full-screen-view span[class*="price"] {
     color: #2ecc71 !important;
     font-weight: bold !important;
+    font-size: 16px !important;
   }
 
-  .back-to-catalog-btn {
+  .nav-btn {
     background: #1a1a1a !important;
     border: 1.5px solid #d4af37 !important;
     color: #d4af37 !important;
@@ -446,7 +478,22 @@
     cursor: pointer !important;
   }
 
-  .whatsapp-btn {
+  .action-btn {
+    background: #d4af37 !important;
+    color: #121212 !important;
+    padding: 12px 20px !important;
+    border-radius: 25px !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    margin-top: 15px !important;
+    cursor: pointer !important;
+    font-size: 15px !important;
+  }
+
+  .whatsapp-order-btn {
     background: #25d366 !important;
     color: #ffffff !important;
     padding: 12px 20px !important;
@@ -454,20 +501,56 @@
     text-align: center !important;
     font-weight: bold !important;
     display: block !important;
+    width: 100% !important;
     text-decoration: none !important;
     margin-top: 15px !important;
+    box-sizing: border-box !important;
+    font-size: 15px !important;
+  }
+
+  .cart-item-row {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
   }
 </style>
 
-<!-- Dedicated Full-Screen Detail View Container -->
-<div id="full-detail-view">
-  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="detail-content-area"></div>
+<!-- Floating Cart Button -->
+<button id="floating-cart-btn" onclick="openCartView()">
+  🛒 Cart <span id="cart-counter">0</span>
+</button>
+
+<!-- Dedicated Detail View -->
+<div id="detail-view" class="full-screen-view">
+  <button class="nav-btn" onclick="closeDetailView()">← Back to Catalog</button>
+  <div id="detail-content"></div>
+  <div style="margin-top: 20px;">
+    <label style="color: #ffffff; font-weight: bold;">Required Quantity (sqm):</label>
+    <input type="number" id="sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCalculation()">
+    <p id="calc-total" style="color: #2ecc71; font-weight: bold; font-size: 16px; margin-top: 10px;"></p>
+    <button class="action-btn" onclick="addCurrentItemToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Dedicated Cart View -->
+<div id="cart-view" class="full-screen-view">
+  <button class="nav-btn" onclick="closeCartView()">← Back to Catalog</button>
+  <h2 style="color: #d4af37; border-bottom: 1px solid #333; padding-bottom: 10px;">Your Selected Cart Items</h2>
+  <div id="cart-items-container"></div>
+  <div id="cart-summary-section" style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
+    <h3 id="cart-grand-total" style="color: #2ecc71;">Grand Total: ₦0.00</h3>
+    <a id="cart-whatsapp-btn" class="whatsapp-order-btn" href="#" target="_blank">Order All via WhatsApp</a>
+  </div>
 </div>
 
 <script id="jiji-script">
+  let cart = [];
+  let currentActiveTile = null;
+
   document.addEventListener("DOMContentLoaded", function() {
-    // 1. Clean Catalog Cards: Ensure ONLY Name, Size, and Green Price show. Hide finish/use on grid.
+    // 1. Clean Catalog Cards (Hide Finish/Use, ensure white name/size and green price)
     document.querySelectorAll('.tile-card, .card').forEach(card => {
       card.querySelectorAll('p, span, div').forEach(el => {
         let txt = el.textContent.trim();
@@ -481,14 +564,19 @@
         }
       });
 
-      // 2. Tap tile to open full-screen detail view containing ALL info
+      // 2. Tap tile to open dedicated detail view
       card.addEventListener('click', function() {
-        const detailView = document.getElementById('full-detail-view');
-        const detailContent = document.getElementById('detail-content-area');
+        currentActiveTile = {
+          html: card.innerHTML,
+          name: (card.querySelector('h3, h4, h5, .title') ? card.querySelector('h3, h4, h5, .title').textContent.trim() : "Tile"),
+          priceVal: extractPrice(card.textContent)
+        };
+
+        const detailView = document.getElementById('detail-view');
+        const detailContent = document.getElementById('detail-content');
         
-        // We need the raw card structure before hiding elements, so we clone and make all children visible
-        let clonedCard = card.cloneNode(true);
-        clonedCard.querySelectorAll('*').forEach(child => {
+        let cloned = card.cloneNode(true);
+        cloned.querySelectorAll('*').forEach(child => {
           child.style.display = 'block';
           let ctxt = child.textContent.trim();
           if (ctxt.includes('₦')) {
@@ -499,33 +587,11 @@
           }
         });
 
-        detailContent.innerHTML = clonedCard.innerHTML;
+        detailContent.innerHTML = cloned.innerHTML;
+        document.getElementById('sqm-input').value = 1;
+        updateCalculation();
 
-        // Ensure WhatsApp Order Button is present and active with Emeka's number 08124913382
-        let tileName = "Tile";
-        const titleEl = detailContent.querySelector('h3, h4, h5, .title');
-        if (titleEl) tileName = titleEl.textContent.trim();
-
-        let waBtn = detailContent.querySelector('a[href*="whatsapp"], a[href*="wa.me"], .whatsapp-btn');
-        if (!waBtn) {
-          waBtn = document.createElement('a');
-          waBtn.className = 'whatsapp-btn';
-          detailContent.appendChild(waBtn);
-        }
-        waBtn.href = "https://wa.me/2348124913382?text=Hello%20Mecks%20Prior%20Interiors,%20I%20want%20to%20order%20" + encodeURIComponent(tileName);
-        waBtn.textContent = "Order via WhatsApp";
-        waBtn.style.background = "#25d366";
-        waBtn.style.color = "#ffffff";
-        waBtn.style.display = "block";
-        waBtn.style.textAlign = "center";
-        waBtn.style.padding = "12px 20px";
-        waBtn.style.borderRadius = "25px";
-        waBtn.style.fontWeight = "bold";
-        waBtn.style.textDecoration = "none";
-        waBtn.style.marginTop = "15px";
-
-        // Hide main catalog and show detail view
-        document.querySelectorAll('body > *:not(#full-detail-view)').forEach(el => {
+        document.querySelectorAll('body > *:not(#detail-view):not(#cart-view):not(#floating-cart-btn)').forEach(el => {
           el.style.display = 'none';
         });
         detailView.classList.add('active');
@@ -534,9 +600,95 @@
     });
   });
 
+  function extractPrice(text) {
+    let matches = text.match(/[₦N]\s*([0-9,]+\.?[0-9]*)/);
+    if (matches) {
+      return parseFloat(matches[1].replace(/,/g, ''));
+    }
+    return 3850; // default fallback price
+  }
+
+  function updateCalculation() {
+    let sqm = parseFloat(document.getElementById('sqm-input').value) || 1;
+    let total = sqm * (currentActiveTile ? currentActiveTile.priceVal : 3850);
+    document.getElementById('calc-total').textContent = "Total Cost: ₦" + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  }
+
+  function addCurrentItemToCart() {
+    if (!currentActiveTile) return;
+    let sqm = parseFloat(document.getElementById('sqm-input').value) || 1;
+    let unitPrice = currentActiveTile.priceVal;
+    let totalCost = sqm * unitPrice;
+
+    cart.push({
+      name: currentActiveTile.name,
+      sqm: sqm,
+      unitPrice: unitPrice,
+      totalCost: totalCost,
+      html: currentActiveTile.html
+    });
+
+    document.getElementById('cart-counter').textContent = cart.length;
+    alert("Added " + currentActiveTile.name + " (" + sqm + " sqm) to Cart!");
+    closeDetailView();
+  }
+
+  function openCartView() {
+    const cartContainer = document.getElementById('cart-items-container');
+    cartContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<p style='color: #888; text-align: center; padding: 30px;'>Your cart is empty.</p>";
+      document.getElementById('cart-grand-total').textContent = "Grand Total: ₦0.00";
+      document.getElementById('cart-whatsapp-btn').href = "#";
+    } else {
+      let grandTotal = 0;
+      let whatsappText = "Hello Mecks Prior Interiors, I want to order these tiles:%0A";
+
+      cart.forEach((item, index) => {
+        grandTotal += item.totalCost;
+        whatsappText += `%0A- ${item.name} (${item.sqm} sqm) @ ₦${item.totalCost.toLocaleString()}`;
+
+        let div = document.createElement('div');
+        div.className = 'cart-item-row';
+        div.innerHTML = `
+          <h4 style="color:#fff; margin:0 0 5px 0;">${item.name}</h4>
+          <p style="margin:2px 0; color:#ccc;">Quantity: <b>${item.sqm} sqm</b></p>
+          <p style="margin:2px 0; color:#2ecc71; font-weight:bold;">Cost: ₦${item.totalCost.toLocaleString()}</p>
+          <button onclick="removeFromCart(${index})" style="background:#e74c3c; color:#fff; border:none; padding:5px 12px; border-radius:4px; margin-top:8px; cursor:pointer; font-size:12px;">Remove</button>
+        `;
+        cartContainer.appendChild(div);
+      });
+
+      document.getElementById('cart-grand-total').textContent = "Grand Total: ₦" + grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      
+      whatsappText += `%0A%0AGrand Total: ₦${grandTotal.toLocaleString()}`;
+      document.getElementById('cart-whatsapp-btn').href = `https://wa.me/2348124913382?text=${whatsappText}`;
+    }
+
+    document.querySelectorAll('body > *:not(#cart-view):not(#floating-cart-btn)').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.getElementById('cart-view').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    document.getElementById('cart-counter').textContent = cart.length;
+    openCartView();
+  }
+
   function closeDetailView() {
-    const detailView = document.getElementById('full-detail-view');
-    detailView.classList.remove('active');
+    document.getElementById('detail-view').classList.remove('active');
+    document.querySelectorAll('body > *').forEach(el => {
+      el.style.display = '';
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function closeCartView() {
+    document.getElementById('cart-view').classList.remove('active');
     document.querySelectorAll('body > *').forEach(el => {
       el.style.display = '';
     });
