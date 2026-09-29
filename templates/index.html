@@ -182,55 +182,39 @@
 
 
 
+
+
 <style>
-  .filter-container, .categories, .tags-row, .btn-group, div[class*="filter"], div[class*="category"], .filters {
+  /* Structural layout only - keeping your original colors intact */
+  .filter-container, .categories, .tags-row, .filters {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     gap: 10px !important;
-    padding: 12px 10px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
     -webkit-overflow-scrolling: touch;
     align-items: center !important;
   }
   .filter-container::-webkit-scrollbar, .categories::-webkit-scrollbar, .filters::-webkit-scrollbar {
     display: none;
   }
-  .filter-container button, .categories button, .tags-row button, .btn-group button, .filters button, .filter-btn, .category-btn {
+  .filter-container button, .categories button, .tags-row button, .filters button, .filter-btn, .category-btn {
     flex: 0 0 auto !important;
     display: inline-block !important;
-    background: #1a1a1a !important;
-    border: 1.5px solid #d4af37 !important;
-    color: #d4af37 !important;
-    padding: 8px 18px !important;
-    border-radius: 25px !important;
-    font-size: 13px !important;
   }
-  .tiles-container, .row, .gallery, .tile-grid, div[class*="grid"], div[class*="container"] {
+
+  /* Strict 2-Column Grid for Tiles */
+  .tile-grid, .tiles-grid, .row-cols-2, #tile-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    padding: 10px !important;
   }
-  .tile-card, .card, div[class*="card"] {
+  
+  .tile-card img, .card img {
     width: 100% !important;
-    margin: 0 !important;
-    background: #181818 !important;
-    border: 2px solid #333 !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.5) !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  .tile-card img, .card img, div[class*="card"] img {
-    width: 100% !important;
-    height: 150px !important;
+    height: 140px !important;
     object-fit: cover !important;
-    border-bottom: 2px solid #222 !important;
   }
 </style>
