@@ -170,3 +170,53 @@
 
 </body>
 </html>
+
+<style>
+  /* Search bar styling */
+  .search-container {
+    padding: 10px 15px;
+    background: #111;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 25px;
+    border: 1px solid #444;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+  }
+
+  /* 2-Column Grid Layout */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 10px;
+  }
+  
+  .tile-grid .tile-card {
+    width: 100%;
+    margin-bottom: 0;
+  }
+</style>
+
+<script>
+  function filterTiles() {
+    let input = document.getElementById('tileSearch').value.toLowerCase();
+    let cards = document.getElementsByClassName('tile-card');
+    
+    for (let i = 0; i < cards.length; i++) {
+      let title = cards[i].innerText.toLowerCase();
+      if (title.includes(input)) {
+        cards[i].style.display = "";
+      } else {
+        cards[i].style.display = "none";
+      }
+    }
+  }
+</script>
