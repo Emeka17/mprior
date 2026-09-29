@@ -247,139 +247,7 @@
 
 
 
-<style id="jiji-grid-style">
-  body {
-    background-color: #121212 !important;
-    color: #ffffff !important;
-    font-family: Arial, sans-serif !important;
-    margin: 0 !important;
-    padding: 10px !important;
-  }
 
-  h1, .brand-name {
-    color: #d4af37 !important;
-    text-align: center !important;
-    font-size: 20px !important;
-    font-weight: bold !important;
-  }
-
-  /* 2-COLUMN GRID CATALOG */
-  #tile-grid, .tile-grid, .tiles-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-    padding: 5px 0 !important;
-  }
-
-  .tile-card, .card {
-    background: #1a1a1a !important;
-    border: 1px solid #333 !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    cursor: pointer !important;
-  }
-
-  .tile-card img, .card img {
-    width: 100% !important;
-    height: 125px !important;
-    object-fit: cover !important;
-    background: #000 !important;
-  }
-
-  /* COMPLETELY HIDE FINISH AND USE FROM GRID CARDS */
-  .tile-card p, .card p, .tile-card span, .card span, .tile-card div {
-    display: none !important;
-  }
-
-  /* ALLOW ONLY: Name, Size, Price to show on the card */
-  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
-  .tile-card .size, .tile-card .size-text,
-  .tile-card .price, .tile-card span.price, .tile-card p.price-text {
-    display: block !important;
-  }
-
-  /* CARD COLORS: Name and Size are White, Only Price is Green */
-  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
-  .tile-card .size, .tile-card .size-text {
-    color: #ffffff !important;
-    font-size: 12px !important;
-    padding: 4px 8px 0 8px !important;
-    margin: 0 !important;
-  }
-
-  .tile-card .price, .tile-card span.price, .tile-card p.price-text {
-    color: #2ecc71 !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
-    padding: 4px 8px 8px 8px !important;
-    margin: 0 !important;
-  }
-
-  /* TRUE FULL-SCREEN SEPARATE DETAIL VIEW */
-  #full-detail-view {
-    display: none;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #121212 !important;
-    z-index: 999999 !important;
-    overflow-y: auto !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-  }
-
-  #full-detail-view.active {
-    display: block !important;
-  }
-
-  /* Inside the detail view, ALL info (Finish, Use, Calculator) is fully visible */
-  #full-detail-view img {
-    width: 100% !important;
-    max-height: 320px !important;
-    object-fit: contain !important;
-    background: #000 !important;
-    border-radius: 8px !important;
-    border: 1px solid #333 !important;
-  }
-
-  #full-detail-view h2, #full-detail-view h3 {
-    color: #ffffff !important;
-    font-size: 20px !important;
-    margin-top: 15px !important;
-  }
-
-  #full-detail-view p, #full-detail-view span, #full-detail-view div {
-    color: #cccccc !important;
-    display: block !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    margin: 6px 0 !important;
-  }
-
-  #full-detail-view .detail-price {
-    color: #2ecc71 !important;
-    font-size: 18px !important;
-    font-weight: bold !important;
-  }
-
-  .back-to-catalog-btn {
-    background: #1a1a1a !important;
-    border: 1.5px solid #d4af37 !important;
-    color: #d4af37 !important;
-    padding: 10px 20px !important;
-    border-radius: 20px !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    margin-bottom: 20px !important;
-    display: inline-block !important;
-    cursor: pointer !important;
-  }
-</style>
 
 <!-- Dedicated Full-Screen View Container -->
 <div id="full-detail-view">
@@ -432,6 +300,243 @@
     const detailView = document.getElementById('full-detail-view');
     detailView.classList.remove('active');
     // Restore main catalog visibility
+    document.querySelectorAll('body > *').forEach(el => {
+      el.style.display = '';
+    });
+    window.scrollTo(0, 0);
+  }
+</script>
+
+<style id="jiji-grid-style">
+  body {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    margin: 0 !important;
+    padding: 10px !important;
+  }
+
+  h1, .brand-name {
+    color: #d4af37 !important;
+    text-align: center !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+  }
+
+  /* 2-COLUMN GRID CATALOG */
+  #tile-grid, .tile-grid, .tiles-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 5px 0 !important;
+  }
+
+  .tile-card, .card {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    cursor: pointer !important;
+  }
+
+  .tile-card img, .card img {
+    width: 100% !important;
+    height: 125px !important;
+    object-fit: cover !important;
+    background: #000 !important;
+  }
+
+  /* CATALOG CARD: HIDE FINISH & USE ENTIRELY */
+  .tile-card .finish-info, .tile-card .use-info, 
+  .tile-card p:has-text("Finish"), .tile-card p:has-text("Use"),
+  .tile-card p:has-text("Polished"), .tile-card p:has-text("Indoor"),
+  .tile-card div > p:nth-child(n+2):not(:last-child) {
+    display: none !important;
+  }
+
+  /* Force Catalog Card Text Colors: Name & Size White, Price Green */
+  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name {
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    padding: 6px 8px 0 8px !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .tile-card .size, .tile-card p.size-text {
+    color: #ffffff !important;
+    font-size: 11px !important;
+    padding: 2px 8px 0 8px !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text, .tile-card p:last-child {
+    color: #2ecc71 !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    padding: 4px 8px 8px 8px !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* TRUE FULL-SCREEN SEPARATE DETAIL VIEW */
+  #full-detail-view {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #121212 !important;
+    z-index: 999999 !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  #full-detail-view.active {
+    display: block !important;
+  }
+
+  #full-detail-view img {
+    width: 100% !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+    background: #000 !important;
+    border-radius: 8px !important;
+    border: 1px solid #333 !important;
+  }
+
+  #full-detail-view h2, #full-detail-view h3, #full-detail-view h4 {
+    color: #ffffff !important;
+    font-size: 18px !important;
+    margin-top: 15px !important;
+    display: block !important;
+  }
+
+  /* Inside detail view, ALL info (Finish, Use, Calculator) is fully visible and styled */
+  #full-detail-view p, #full-detail-view span, #full-detail-view div {
+    color: #cccccc !important;
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin: 6px 0 !important;
+  }
+
+  #full-detail-view .price, #full-detail-view span[class*="price"], #full-detail-view p:has-text("₦") {
+    color: #2ecc71 !important;
+    font-weight: bold !important;
+  }
+
+  .back-to-catalog-btn {
+    background: #1a1a1a !important;
+    border: 1.5px solid #d4af37 !important;
+    color: #d4af37 !important;
+    padding: 10px 20px !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    margin-bottom: 20px !important;
+    display: inline-block !important;
+    cursor: pointer !important;
+  }
+
+  .whatsapp-btn {
+    background: #25d366 !important;
+    color: #ffffff !important;
+    padding: 12px 20px !important;
+    border-radius: 25px !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    display: block !important;
+    text-decoration: none !important;
+    margin-top: 15px !important;
+  }
+</style>
+
+<!-- Dedicated Full-Screen Detail View Container -->
+<div id="full-detail-view">
+  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
+  <div id="detail-content-area"></div>
+</div>
+
+<script id="jiji-script">
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Clean Catalog Cards: Ensure ONLY Name, Size, and Green Price show. Hide finish/use on grid.
+    document.querySelectorAll('.tile-card, .card').forEach(card => {
+      card.querySelectorAll('p, span, div').forEach(el => {
+        let txt = el.textContent.trim();
+        if (txt.includes('Finish:') || txt.includes('Use:') || txt.includes('Place of use:') || txt.includes('Polished') || txt.includes('Indoor Wall') || txt.includes('Outdoor') || txt.includes('Rustic') || txt.includes('Super Polished')) {
+          el.style.display = 'none';
+        } else if (txt.includes('₦')) {
+          el.style.color = '#2ecc71';
+          el.style.fontWeight = 'bold';
+        } else if (txt.includes('Size') || txt.includes('×')) {
+          el.style.color = '#ffffff';
+        }
+      });
+
+      // 2. Tap tile to open full-screen detail view containing ALL info
+      card.addEventListener('click', function() {
+        const detailView = document.getElementById('full-detail-view');
+        const detailContent = document.getElementById('detail-content-area');
+        
+        // We need the raw card structure before hiding elements, so we clone and make all children visible
+        let clonedCard = card.cloneNode(true);
+        clonedCard.querySelectorAll('*').forEach(child => {
+          child.style.display = 'block';
+          let ctxt = child.textContent.trim();
+          if (ctxt.includes('₦')) {
+            child.style.color = '#2ecc71';
+            child.style.fontWeight = 'bold';
+          } else {
+            child.style.color = '#cccccc';
+          }
+        });
+
+        detailContent.innerHTML = clonedCard.innerHTML;
+
+        // Ensure WhatsApp Order Button is present and active with Emeka's number 08124913382
+        let tileName = "Tile";
+        const titleEl = detailContent.querySelector('h3, h4, h5, .title');
+        if (titleEl) tileName = titleEl.textContent.trim();
+
+        let waBtn = detailContent.querySelector('a[href*="whatsapp"], a[href*="wa.me"], .whatsapp-btn');
+        if (!waBtn) {
+          waBtn = document.createElement('a');
+          waBtn.className = 'whatsapp-btn';
+          detailContent.appendChild(waBtn);
+        }
+        waBtn.href = "https://wa.me/2348124913382?text=Hello%20Mecks%20Prior%20Interiors,%20I%20want%20to%20order%20" + encodeURIComponent(tileName);
+        waBtn.textContent = "Order via WhatsApp";
+        waBtn.style.background = "#25d366";
+        waBtn.style.color = "#ffffff";
+        waBtn.style.display = "block";
+        waBtn.style.textAlign = "center";
+        waBtn.style.padding = "12px 20px";
+        waBtn.style.borderRadius = "25px";
+        waBtn.style.fontWeight = "bold";
+        waBtn.style.textDecoration = "none";
+        waBtn.style.marginTop = "15px";
+
+        // Hide main catalog and show detail view
+        document.querySelectorAll('body > *:not(#full-detail-view)').forEach(el => {
+          el.style.display = 'none';
+        });
+        detailView.classList.add('active');
+        window.scrollTo(0, 0);
+      });
+    });
+  });
+
+  function closeDetailView() {
+    const detailView = document.getElementById('full-detail-view');
+    detailView.classList.remove('active');
     document.querySelectorAll('body > *').forEach(el => {
       el.style.display = '';
     });
