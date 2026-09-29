@@ -76,3 +76,13 @@ def delete_tile(id):
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+import cloudinary.uploader
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    file = request.files.get('file')
+    if file:
+        result = cloudinary.uploader.upload(file)
+        return result['secure_url']
+    return 'No file uploaded', 400
