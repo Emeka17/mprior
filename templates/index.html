@@ -298,3 +298,64 @@
     font-weight: bold !important;
   }
 </style>
+
+<style>
+  /* LATEST SPECIFIC UPDATE */
+  /* Ensure grid cards show ONLY Name, Size, and Green Price compactly */
+  .tile-card p:not(:last-child):not(:first-child):not(:contains("Size")), 
+  .tile-card div:not(.card-body):not(:has(img)),
+  .tile-card span:not(.price) {
+    display: none !important;
+  }
+
+  .tile-card h5, .tile-card .title, .tile-card p:first-of-type {
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    padding: 6px 8px 0 8px !important;
+    margin: 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tile-card p:contains("Size"), .tile-card p:nth-of-type(2) {
+    color: #b0b0b0 !important;
+    font-size: 11px !important;
+    padding: 2px 8px 0 8px !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* Vibrant Green Price in Grid */
+  .tile-card .price, .tile-card p:last-of-type, .tile-card span[class*="price"] {
+    color: #2ecc71 !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    padding: 4px 8px 8px 8px !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* Detail view full specs & long-press save styling */
+  #tile-detail img, .detail-panel img, #detail-img {
+    -webkit-touch-callout: default !important; /* Enables long press menu to save image on mobile */
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const observer = new MutationObserver(function(mutations) {
+      const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section');
+      const detailImg = document.querySelector('#tile-detail img, .detail-panel img, #detail-img');
+      if (detailContainer && detailImg && !document.getElementById('mobile-save-tip')) {
+        const tip = document.createElement('div');
+        tip.id = 'mobile-save-tip';
+        tip.innerText = '💡 Long-press the image above to save this design to your phone.';
+        tip.style.cssText = 'text-align: center; color: #d4af37; font-size: 11px; margin-top: 8px; font-style: italic;';
+        detailContainer.appendChild(tip);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+</script>
