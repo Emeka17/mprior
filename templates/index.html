@@ -188,35 +188,55 @@
 
 
 
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const observer = new MutationObserver(function(mutations) {
+      const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section');
+      const detailImg = document.querySelector('#tile-detail img, .detail-panel img, #detail-img');
+      if (detailContainer && detailImg && !document.getElementById('mobile-save-tip')) {
+        const tip = document.createElement('div');
+        tip.id = 'mobile-save-tip';
+        tip.innerText = '💡 Long-press the image above to save this design to your phone.';
+        tip.style.cssText = 'text-align: center; color: #d4af37; font-size: 11px; margin-top: 8px; font-style: italic;';
+        detailContainer.appendChild(tip);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+</script>
+
 <style>
-  /* Base Theme */
+  /* Base Dark Luxury Theme */
   body {
     background-color: #121212 !important;
     color: #e0e0e0 !important;
     font-family: Arial, sans-serif !important;
     margin: 0 !important;
     padding: 10px !important;
-    padding-bottom: 60px !important;
+    padding-bottom: 70px !important;
   }
 
-  /* Brand Header & Subtitles */
-  h1, .brand-name, header h1, .catalog-header h1 {
+  h1, .brand-name, header h1 {
     color: #d4af37 !important;
     font-weight: bold !important;
     text-align: center !important;
-    font-size: 24px !important;
+    font-size: 22px !important;
     margin-bottom: 5px !important;
   }
   p, .subtitle, .catalog-instruction {
     color: #b0b0b0 !important;
     text-align: center !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
   }
   a {
     color: #d4af37 !important;
   }
 
-  /* Horizontal Scrolling Filter Pills */
+  /* Horizontal Scrolling Filters */
   .filter-container, .categories, .tags-row, .filters {
     display: flex !important;
     flex-direction: row !important;
@@ -238,12 +258,12 @@
     background: #1a1a1a !important;
     border: 1.5px solid #d4af37 !important;
     color: #d4af37 !important;
-    padding: 7px 14px !important;
+    padding: 6px 14px !important;
     border-radius: 20px !important;
     font-size: 12px !important;
   }
 
-  /* STRICT FORCED 2-COLUMN GRID */
+  /* 2-COLUMN GRID */
   #tile-grid, .tile-grid, .tiles-grid, .row, div[class*="grid"] {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -254,57 +274,30 @@
     padding: 5px 0 !important;
   }
 
-  /* Tile Cards */
+  /* Compact Tile Cards in Grid */
   .tile-card, .card, div[class*="card"] {
     width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
     background: #1a1a1a !important;
     border: 1.5px solid #333 !important;
     border-radius: 10px !important;
     overflow: hidden !important;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5) !important;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5) !important;
     display: flex !important;
     flex-direction: column !important;
     box-sizing: border-box !important;
+    cursor: pointer !important;
   }
 
-  /* Tile Image Container */
-  .tile-card img, .card img, img {
+  .tile-card img, .card img {
     width: 100% !important;
-    height: 130px !important;
+    height: 120px !important;
     object-fit: cover !important;
     background-color: #000 !important;
     border-bottom: 1px solid #333 !important;
   }
 
-  /* Card Text Styling */
-  .tile-card h5, .tile-card p, .card-body, div[class*="card"] p {
-    color: #e0e0e0 !important;
-    font-size: 12px !important;
-    padding: 4px 8px !important;
-    margin: 2px 0 !important;
-  }
-
-  /* VIBRANT GREEN PRICE */
-  .tile-card p:last-child, span[class*="price"], .price, td:has(N), div:has(> N) {
-    color: #2ecc71 !important;
-    font-weight: bold !important;
-  }
-  
-  /* Catch any text containing price Naira symbol */
-  *[contains(text(), '₦')] {
-    color: #2ecc71 !important;
-    font-weight: bold !important;
-  }
-</style>
-
-<style>
-  /* LATEST SPECIFIC UPDATE */
-  /* Ensure grid cards show ONLY Name, Size, and Green Price compactly */
-  .tile-card p:not(:last-child):not(:first-child):not(:contains("Size")), 
-  .tile-card div:not(.card-body):not(:has(img)),
-  .tile-card span:not(.price) {
+  /* HIDE Finish and Use inside grid cards, KEEP Name, Size, and Price */
+  .tile-card p:nth-child(2), .tile-card p:nth-child(3) {
     display: none !important;
   }
 
@@ -319,7 +312,7 @@
     text-overflow: ellipsis;
   }
 
-  .tile-card p:contains("Size"), .tile-card p:nth-of-type(2) {
+  .tile-card p:nth-last-of-type(2) {
     color: #b0b0b0 !important;
     font-size: 11px !important;
     padding: 2px 8px 0 8px !important;
@@ -327,35 +320,34 @@
     display: block !important;
   }
 
-  /* Vibrant Green Price in Grid */
-  .tile-card .price, .tile-card p:last-of-type, .tile-card span[class*="price"] {
+  /* FORCED VIBRANT GREEN PRICE EVERYWHERE (Grid and Details) */
+  .tile-card p:last-of-type, 
+  .tile-card span, 
+  div[style*="price"], 
+  p:has(span),
+  .card-body p:last-child {
     color: #2ecc71 !important;
-    font-size: 12px !important;
     font-weight: bold !important;
-    padding: 4px 8px 8px 8px !important;
-    margin: 0 !important;
-    display: block !important;
   }
 
-  /* Detail view full specs & long-press save styling */
-  #tile-detail img, .detail-panel img, #detail-img {
-    -webkit-touch-callout: default !important; /* Enables long press menu to save image on mobile */
+  /* Target any text containing Naira symbol ₦ */
+  body *:not(h1):not(h2):not(h3) {
+    /* Safe fallback rule */
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const observer = new MutationObserver(function(mutations) {
-      const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section');
-      const detailImg = document.querySelector('#tile-detail img, .detail-panel img, #detail-img');
-      if (detailContainer && detailImg && !document.getElementById('mobile-save-tip')) {
-        const tip = document.createElement('div');
-        tip.id = 'mobile-save-tip';
-        tip.innerText = '💡 Long-press the image above to save this design to your phone.';
-        tip.style.cssText = 'text-align: center; color: #d4af37; font-size: 11px; margin-top: 8px; font-style: italic;';
-        detailContainer.appendChild(tip);
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    setInterval(function() {
+      document.querySelectorAll('p, span, div, td').forEach(el => {
+        if (el.textContent && el.textContent.includes('₦') && !el.classList.contains('green-fixed')) {
+          if (!el.closest('h1') && !el.closest('header')) {
+            el.style.color = '#2ecc71';
+            el.style.fontWeight = 'bold';
+            el.classList.add('green-fixed');
+          }
+        }
+      });
+    }, 500);
   });
 </script>
