@@ -237,3 +237,54 @@
     });
   });
 </script>
+
+<style>
+  .search-container {
+    padding: 15px;
+    background: #1a1a1a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+    outline: none;
+  }
+  .search-input:focus {
+    border-color: #d4af37;
+  }
+  /* Force 2-Column Grid on Mobile and Desktop */
+  .tile-grid, .container, .gallery, .row {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+  .tile-card, .card {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+</style>
+
+<script>
+  function filterTiles() {
+    let input = document.getElementById('tileSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.tile-card, .card');
+    
+    cards.forEach(card => {
+      let text = card.innerText.toLowerCase();
+      if (text.includes(input)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
