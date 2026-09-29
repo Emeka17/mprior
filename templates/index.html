@@ -48,6 +48,44 @@
   }
 </style>
 
+
+<style id="mecks-mobile-detail-fix">
+  /* FORCE DETAIL VIEW TO BE CLEAN FULL-SCREEN MOBILE OVERLAY */
+  #custom-detail-view, .detail-view, .product-modal, .modal-content, [id*="detail"], [class*="detail"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #121212 !important;
+    z-index: 99999 !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Make sure images inside detail view scale nicely */
+  #custom-detail-view img, .detail-view img, .product-modal img {
+    width: 100% !important;
+    max-height: 250px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+  }
+
+  /* Style text and Add to Cart button cleanly inside full-screen view */
+  #custom-detail-view h2, #custom-detail-view h3, #custom-detail-view p, #custom-detail-view span {
+    color: #ffffff !important;
+  }
+
+  #custom-detail-view .price {
+    color: #2ecc71 !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+  }
+</style>
+
 </head>
 <body>
 
