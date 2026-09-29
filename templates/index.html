@@ -220,3 +220,20 @@
     }
   }
 </script>
+
+<!-- Search Bar HTML -->
+<div class="search-container">
+  <input type="text" id="tileSearch" class="search-input" onkeyup="filterTiles()" placeholder="Search tiles by name, finish, or style...">
+</div>
+
+<script>
+  // Ensure the main tile listing container uses the 2-column grid class automatically
+  window.addEventListener('DOMContentLoaded', (event) => {
+    let containers = document.querySelectorAll('.container, .gallery, .row, main');
+    containers.forEach(el => {
+      if (!el.classList.contains('tile-grid') && el.innerHTML.includes('tile-card')) {
+        el.classList.add('tile-grid');
+      }
+    });
+  });
+</script>
