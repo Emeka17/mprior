@@ -13,21 +13,7 @@
 
 
 
-<script>
-  function filterTiles() {
-    let input = document.getElementById('tileSearch').value.toLowerCase().trim();
-    let cards = document.querySelectorAll('.tile-card, .card, div[class*="card"]');
-    
-    cards.forEach(card => {
-      let text = card.innerText.toLowerCase();
-      if (input === "" || text.includes(input)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-</script>
+
 
 
     <header>
@@ -42,21 +28,7 @@
 
 
 
-<script>
-  function filterTiles() {
-    let input = document.getElementById('tileSearch').value.toLowerCase().trim();
-    let cards = document.querySelectorAll('.tile-card, .card, div[class*="card"]');
-    
-    cards.forEach(card => {
-      let text = card.innerText.toLowerCase();
-      if (input === "" || text.includes(input)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-</script>
+
 </a>
     </header>
 
@@ -119,63 +91,7 @@
         </div>
     </div>
 
-    <script>
-        let currentUnitPrice = 0;
-        let currentTileName = '';
-        let currentTileSize = '';
-
-        function openModal(name, img, finish, use, size, price) {
-            currentUnitPrice = parseFloat(price) || 0;
-            currentTileName = name;
-            currentTileSize = size;
-
-            document.getElementById('modalTileName').innerText = name;
-            document.getElementById('modalTileImg').src = img;
-            document.getElementById('modalTileDetails').innerHTML = `<strong>Finish:</strong> ${finish}<br><strong>Place of Use:</strong> ${use}<br><strong>Size:</strong> ${size}`;
-            document.getElementById('modalTilePrice').innerHTML = `Price: <strong>₦${currentUnitPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong> per sqm`;
-            
-            document.getElementById('modalQtyInput').value = 1;
-            calculateModalTotal();
-
-            document.getElementById('tileModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('tileModal').style.display = 'none';
-        }
-
-        function calculateModalTotal() {
-            const qty = parseFloat(document.getElementById('modalQtyInput').value) || 0;
-            const total = currentUnitPrice * qty;
-            
-            document.getElementById('modalTotalCost').innerText = total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-            const waMsg = encodeURIComponent(`Hello Mecks Prior Interiors, I am interested in ordering ${qty} sqm of ${currentTileName} (${currentTileSize}) for a total of ₦${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}. Please confirm availability.`);
-            document.getElementById('modalWhatsAppBtn').href = `https://wa.me/2348124913382?text=${waMsg}`;
-        }
-
-        function filterTiles(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const items = document.querySelectorAll('.tile-item');
-            items.forEach(item => {
-                const cat = item.getAttribute('data-category').toLowerCase();
-                if (category === 'all' || cat.includes(category.toLowerCase())) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('tileModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
+    
 
 
 
@@ -192,22 +108,7 @@
 
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const observer = new MutationObserver(function(mutations) {
-      const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section');
-      const detailImg = document.querySelector('#tile-detail img, .detail-panel img, #detail-img');
-      if (detailContainer && detailImg && !document.getElementById('mobile-save-tip')) {
-        const tip = document.createElement('div');
-        tip.id = 'mobile-save-tip';
-        tip.innerText = '💡 Long-press the image above to save this design to your phone.';
-        tip.style.cssText = 'text-align: center; color: #d4af37; font-size: 11px; margin-top: 8px; font-style: italic;';
-        detailContainer.appendChild(tip);
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  });
-</script>
+
 
 <style>
   /* Base Dark Luxury Theme */
@@ -336,83 +237,15 @@
   }
 </style>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    setInterval(function() {
-      document.querySelectorAll('p, span, div, td').forEach(el => {
-        if (el.textContent && el.textContent.includes('₦') && !el.classList.contains('green-fixed')) {
-          if (!el.closest('h1') && !el.closest('header')) {
-            el.style.color = '#2ecc71';
-            el.style.fontWeight = 'bold';
-            el.classList.add('green-fixed');
-          }
-        }
-      });
-    }, 500);
-  });
-</script>
 
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Aggressively clean grid cards: Keep ONLY Name, Size, and Price. Hide Finish/Use completely.
-    function cleanGridCards() {
-      document.querySelectorAll('.tile-card, .card').forEach(card => {
-        const textElements = card.querySelectorAll('p, span, div:not(.card-body)');
-        textElements.forEach(el => {
-          const content = el.textContent.trim();
-          // If it's finish, use, or extra specs, hide it in the grid view
-          if (content.includes('Finish:') || content.includes('Use:') || content.includes('Place of use:')) {
-            el.style.display = 'none';
-          }
-          // Ensure price is vibrant green
-          if (content.includes('₦')) {
-            el.style.color = '#2ecc71';
-            el.style.fontWeight = 'bold';
-            el.style.display = 'block';
-          } else if (content.startsWith('25×') || content.startsWith('30×') || content.startsWith('60×') || content.includes('Size')) {
-            // Size text styling
-            el.style.color = '#cccccc';
-            el.style.display = 'block';
-          }
-        });
-      });
-    }
 
-    setInterval(cleanGridCards, 300);
 
-    // Full-screen detail view toggle on tap
-    const cards = document.querySelectorAll('.tile-card, .card');
-    const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section');
-    const catalogGrid = document.querySelector('#tile-grid, .tile-grid, .tiles-grid');
-    const searchBar = document.querySelector('.search-container, input[type="text"]');
-    const filterBtns = document.querySelector('.filter-container, .categories');
 
-    cards.forEach(card => {
-      card.addEventListener('click', function() {
-        if (detailContainer) {
-          detailContainer.classList.add('active');
-          if (catalogGrid) catalogGrid.style.display = 'none';
-          if (searchBar) searchBar.style.display = 'none';
-          if (filterBtns) filterBtns.style.display = 'none';
-          window.scrollTo(0, 0);
-        }
-      });
-    });
 
-    document.addEventListener('click', function(e) {
-      if (e.target.matches('.close-detail-btn, #back-to-catalog, .close-btn')) {
-        if (detailContainer) {
-          detailContainer.classList.remove('active');
-          if (catalogGrid) catalogGrid.style.display = 'grid';
-          if (searchBar) searchBar.style.display = 'flex';
-          if (filterBtns) filterBtns.style.display = 'flex';
-        }
-      }
-    });
-  });
-</script>
+
+
 
 <style id="jiji-grid-style">
   body {
@@ -421,7 +254,6 @@
     font-family: Arial, sans-serif !important;
     margin: 0 !important;
     padding: 10px !important;
-    padding-bottom: 90px !important;
   }
 
   h1, .brand-name {
@@ -457,62 +289,56 @@
     background: #000 !important;
   }
 
-  /* HIDE ALL EXTRA DETAILS IN GRID CARDS (Finish, Use, etc.) */
-  .tile-card *:not(img):not(h3):not(h4):not(h5):not(.title):not(.size):not(.price):not(p):not(span) {
+  /* COMPLETELY HIDE FINISH AND USE FROM GRID CARDS */
+  .tile-card p, .card p, .tile-card span, .card span, .tile-card div {
     display: none !important;
   }
 
-  /* ONLY 3 ITEMS VISIBLE: Name (White), Size (White), Price (Green) */
-  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name {
-    color: #ffffff !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
-    padding: 8px 8px 0 8px !important;
-    margin: 0 !important;
-    display: block !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .tile-card .size, .tile-card p.size-text {
-    color: #ffffff !important;
-    font-size: 11px !important;
-    padding: 2px 8px 0 8px !important;
-    margin: 0 !important;
+  /* ALLOW ONLY: Name, Size, Price to show on the card */
+  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
+  .tile-card .size, .tile-card .size-text,
+  .tile-card .price, .tile-card span.price, .tile-card p.price-text {
     display: block !important;
   }
 
-  .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text {
+  /* CARD COLORS: Name and Size are White, Only Price is Green */
+  .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
+  .tile-card .size, .tile-card .size-text {
+    color: #ffffff !important;
+    font-size: 12px !important;
+    padding: 4px 8px 0 8px !important;
+    margin: 0 !important;
+  }
+
+  .tile-card .price, .tile-card span.price, .tile-card p.price-text {
     color: #2ecc71 !important;
     font-size: 13px !important;
     font-weight: bold !important;
     padding: 4px 8px 8px 8px !important;
     margin: 0 !important;
-    display: block !important;
   }
 
-  /* DEDICATED FULL-SCREEN ITEM VIEW (Jiji Style) */
-  #tile-detail, .tile-detail-container, #detail-section, .detail-view {
-    display: none !important;
+  /* TRUE FULL-SCREEN SEPARATE DETAIL VIEW */
+  #full-detail-view {
+    display: none;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
     background: #121212 !important;
-    z-index: 99999 !important;
+    z-index: 999999 !important;
     overflow-y: auto !important;
     padding: 20px !important;
     box-sizing: border-box !important;
   }
 
-  #tile-detail.active, .tile-detail-container.active, #detail-section.active, .detail-view.active {
+  #full-detail-view.active {
     display: block !important;
   }
 
-  /* Inside detail view, show full image and ALL info (Finish, Use, Calculator) */
-  #tile-detail img, .tile-detail-container img, .detail-view img {
+  /* Inside the detail view, ALL info (Finish, Use, Calculator) is fully visible */
+  #full-detail-view img {
     width: 100% !important;
     max-height: 320px !important;
     object-fit: contain !important;
@@ -521,108 +347,94 @@
     border: 1px solid #333 !important;
   }
 
-  #tile-detail h2, #tile-detail h3, .detail-title {
+  #full-detail-view h2, #full-detail-view h3 {
     color: #ffffff !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
     margin-top: 15px !important;
-    display: block !important;
   }
 
-  #tile-detail p, #tile-detail span, .detail-text {
+  #full-detail-view p, #full-detail-view span, #full-detail-view div {
     color: #cccccc !important;
-    font-size: 14px !important;
-    line-height: 1.6 !important;
     display: block !important;
-  }
-  
-  #tile-detail .price, #tile-detail span:contains("₦") {
-    color: #2ecc71 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin: 6px 0 !important;
   }
 
-  .close-detail-btn, #back-to-catalog, .back-btn {
+  #full-detail-view .detail-price {
+    color: #2ecc71 !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+  }
+
+  .back-to-catalog-btn {
     background: #1a1a1a !important;
     border: 1.5px solid #d4af37 !important;
     color: #d4af37 !important;
-    padding: 8px 16px !important;
+    padding: 10px 20px !important;
     border-radius: 20px !important;
     font-size: 14px !important;
     font-weight: bold !important;
-    margin-bottom: 15px !important;
+    margin-bottom: 20px !important;
     display: inline-block !important;
     cursor: pointer !important;
   }
 </style>
 
+<!-- Dedicated Full-Screen View Container -->
+<div id="full-detail-view">
+  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
+  <div id="detail-content-area"></div>
+</div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Strictly format grid cards: Name (white), Size (white), Price (green). Hide everything else.
-    function cleanCards() {
-      document.querySelectorAll('.tile-card, .card').forEach(card => {
-        const elements = card.querySelectorAll('p, span, div:not(.card-body)');
-        elements.forEach(el => {
-          const txt = el.textContent.trim();
-          
-          // Hide Finish, Use, and extra fields in the small grid
-          if (txt.includes('Finish:') || txt.includes('Use:') || txt.includes('Place of use:') || txt.includes('Polished') || txt.includes('Indoor Wall') || txt.includes('Inkjet')) {
-            if (!el.closest('#tile-detail') && !el.closest('.detail-view')) {
-              el.style.display = 'none';
-            }
-          }
-          
-          // Price is green
-          if (txt.includes('₦')) {
-            el.style.color = '#2ecc71';
-            el.style.fontWeight = 'bold';
-            el.style.display = 'block';
-          } 
-          // Name and Size are white
-          else if (txt.includes('Size') || txt.includes('×') || (!txt.includes('₦') && txt.length > 0)) {
-            if (!el.closest('#tile-detail') && !el.closest('.detail-view') && !txt.includes('Finish') && !txt.includes('Use')) {
-              el.style.color = '#ffffff';
-              el.style.display = 'block';
-            }
+    // Clean up cards to ensure only name, size, and green price show
+    document.querySelectorAll('.tile-card, .card').forEach(card => {
+      // Find all text elements and hide anything containing Finish or Use
+      card.querySelectorAll('p, span, div').forEach(el => {
+        let txt = el.textContent.trim();
+        if (txt.includes('Finish:') || txt.includes('Use:') || txt.includes('Place of use:') || txt.includes('Polished') || txt.includes('Indoor Wall')) {
+          el.style.display = 'none';
+        }
+      });
+
+      // When tapping a card, open the separate full detail view
+      card.addEventListener('click', function() {
+        const detailView = document.getElementById('full-detail-view');
+        const detailContent = document.getElementById('detail-content-area');
+        
+        // Grab the full HTML content of this card (which includes finish, use, calculator from backend)
+        detailContent.innerHTML = card.innerHTML;
+        
+        // Ensure all elements (including finish and use) are visible inside the detail view
+        detailContent.querySelectorAll('*').forEach(child => {
+          child.style.display = 'block';
+          if (child.textContent.includes('₦')) {
+            child.style.color = '#2ecc71';
+            child.style.fontWeight = 'bold';
+          } else {
+            child.style.color = '#cccccc';
           }
         });
-      });
-    }
 
-    setInterval(cleanCards, 200);
-
-    // Jiji style full-screen switch on card tap
-    const cards = document.querySelectorAll('.tile-card, .card');
-    const detailContainer = document.querySelector('#tile-detail, .tile-detail-container, #detail-section, .detail-view');
-    const catalogGrid = document.querySelector('#tile-grid, .tile-grid, .tiles-grid');
-    const searchBar = document.querySelector('.search-container, input[type="text"]');
-    const filterBtns = document.querySelector('.filter-container, .categories');
-    const brandHeader = document.querySelector('h1, .brand-name');
-
-    cards.forEach(card => {
-      card.addEventListener('click', function(e) {
-        // If the app already has its own click handler, let's also force our full screen view open
-        if (detailContainer) {
-          detailContainer.classList.add('active');
-          detailContainer.style.display = 'block';
-        }
-        if (catalogGrid) catalogGrid.style.display = 'none';
-        if (searchBar && searchBar.parentElement) searchBar.parentElement.style.display = 'none';
-        if (filterBtns) filterBtns.style.display = 'none';
-        if (brandHeader) brandHeader.style.display = 'none';
+        // Hide main catalog and show detail view
+        document.querySelectorAll('body > *:not(#full-detail-view)').forEach(el => {
+          el.style.display = 'none';
+        });
+        detailView.classList.add('active');
         window.scrollTo(0, 0);
       });
     });
-
-    // Back / Close button handler
-    document.addEventListener('click', function(e) {
-      if (e.target.matches('.close-detail-btn, #back-to-catalog, .back-btn, .close-btn')) {
-        if (detailContainer) {
-          detailContainer.classList.remove('active');
-          detailContainer.style.display = 'none';
-        }
-        if (catalogGrid) catalogGrid.style.display = 'grid';
-        if (searchBar && searchBar.parentElement) searchBar.parentElement.style.display = 'block';
-        if (filterBtns) filterBtns.style.display = 'flex';
-        if (brandHeader) brandHeader.style.display = 'block';
-      }
-    });
   });
+
+  function closeDetailView() {
+    const detailView = document.getElementById('full-detail-view');
+    detailView.classList.remove('active');
+    // Restore main catalog visibility
+    document.querySelectorAll('body > *').forEach(el => {
+      el.style.display = '';
+    });
+    window.scrollTo(0, 0);
+  }
 </script>
