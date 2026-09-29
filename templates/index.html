@@ -6,17 +6,21 @@
     <title>Mecks Prior Interiors - Luxury Tile Catalog</title>
     
 
-<style id="mecks-catalog-grid">
-  /* CLEAN 2-COLUMN GRID */
-  .grid, #tile-grid, .tile-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-  .card, .tile-card { background: #1a1a1a !important; border: 1px solid #333 !important; border-radius: 8px !important; }
-  /* Hide extra metadata on grid cards, keep Name, Size, Price */
-  .card div:nth-child(n+4), .card p, .card span:not(.price) { display: none !important; }
-  .card .card-title, .card h3, .card h4 { display: block !important; color: #fff !important; font-size: 12px !important; padding: 4px 8px 0 8px !important; }
-  .card .card-price, .card .price { display: block !important; color: #2ecc71 !important; font-weight: bold !important; font-size: 13px !important; padding: 4px 8px 8px 8px !important; }
 
+
+
+
+
+
+
+
+
+
+
+
+<style id="mecks-catalog-grid">
   /* 2-COLUMN GRID CATALOG */
-  #tile-grid, .tile-grid, .tiles-grid {
+  #tile-grid, .tile-grid, .tiles-grid, .grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
@@ -36,11 +40,10 @@
     height: 125px !important;
     object-fit: cover !important;
   }
-  /* Hide extra text labels on main catalog grid cards */
+  /* Hide extra text metadata on main grid cards, show only name, size, price */
   .tile-card p:not(.price-text):not(.name), .tile-card span:not(.price), .tile-card div:not(.card-content) {
     display: none !important;
   }
-  /* Show only Name, Size, Price */
   .tile-card h3, .tile-card h4, .tile-card .title, .tile-card .size, .tile-card .price {
     display: block !important;
     color: #ffffff !important;
@@ -55,15 +58,6 @@
     padding-bottom: 8px !important;
   }
 </style>
-
-
-
-
-
-
-
-
-
 
 </head>
 <body>
