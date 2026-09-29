@@ -4,77 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mecks Prior Interiors - Luxury Tile Catalog</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; }
-        header { background: #1f1f1f; padding: 20px; text-align: center; border-bottom: 2px solid #D4AF37; }
-        h1 { color: #D4AF37; margin: 0; font-size: 24px; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        
-        /* Filter Bar */
-        .filter-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
-        .filter-btn { background: #1e1e1e; color: #D4AF37; border: 1px solid #D4AF37; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
-        .filter-btn.active, .filter-btn:hover { background: #D4AF37; color: #121212; font-weight: bold; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #1e1e1e; border: 1px solid #333; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-3px); border-color: #D4AF37; }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-body { padding: 15px; }
-        .card-title { font-size: 18px; color: #D4AF37; margin-bottom: 8px; font-weight: bold; }
-        .card-info { font-size: 13px; color: #aaa; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .card-price { font-size: 16px; color: #25D366; margin-top: 10px; font-weight: bold; border-top: 1px solid #333; padding-top: 8px; }
-        .admin-link { display: inline-block; margin: 15px 0; color: #D4AF37; text-decoration: none; font-weight: bold; }
-
-        /* Modal Popup Styling */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
-        .modal-content { background: #1e1e1e; border: 1px solid #D4AF37; border-radius: 12px; max-width: 500px; width: 100%; overflow: hidden; position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.7); max-height: 90vh; display: flex; flex-direction: column; }
-        .modal-header { background: #252525; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
-        .modal-title { color: #D4AF37; font-size: 18px; font-weight: bold; margin: 0; }
-        .close-btn { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-        .modal-body { padding: 20px; overflow-y: auto; }
-        .modal-img { width: 100%; height: 260px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
-        .modal-details { font-size: 14px; color: #bbb; margin-bottom: 15px; line-height: 1.5; }
-        .modal-price { font-size: 18px; color: #fff; margin-bottom: 15px; font-weight: bold; }
-        .quantity-box { background: #252525; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .quantity-box label { display: block; font-size: 14px; margin-bottom: 8px; color: #bbb; }
-        .quantity-box input { width: 100%; padding: 10px; box-sizing: border-box; background: #111; border: 1px solid #444; color: #fff; font-size: 16px; border-radius: 4px; }
-        .total-display { font-weight: bold; color: #25D366; font-size: 18px; margin-top: 10px; }
-        .btn-whatsapp { display: block; width: 100%; padding: 12px; background: #25D366; color: #fff; text-align: center; text-decoration: none; font-weight: bold; border-radius: 5px; box-sizing: border-box; margin-top: 15px; }
-        .btn-whatsapp:hover { background: #20ba5a; }
-    </style>
+    
 </head>
 <body>
 
 <!-- Master Sticky Search Bar -->
 
 
-<style>
-  /* Force filter buttons into a horizontal scrolling row */
-  .filter-container, .categories, .tags-row, .btn-group, div[class*="filter"], div[class*="category"] {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    gap: 8px !important;
-    padding: 10px !important;
-    -webkit-overflow-scrolling: touch;
-  }
 
-  /* Force 2-Column Grid Layout */
-  .tiles-container, .row, .gallery, .tile-grid, div[class*="grid"], div[class*="container"] {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 10px !important;
-  }
-
-  .tile-card, .card, div[class*="card"] {
-    width: 100% !important;
-    margin: 0 !important;
-  }
-</style>
 
 <script>
   function filterTiles() {
@@ -103,53 +40,7 @@
   <input type="text" id="tileSearch" onkeyup="filterTiles()" placeholder="🔍 Search tiles by name, finish, style..." style="width: 100%; max-width: 500px; padding: 12px 16px; font-size: 16px; border-radius: 8px; border: 2px solid #d4af37; background: #1e1e1e; color: #fff; outline: none;">
 </div>
 
-<style>
-  /* Force filter buttons into a neat horizontal scrolling row */
-  .filter-container, .categories, .tags-row, .btn-group, div[class*="filter"], div[class*="category"], .filters {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    gap: 10px !important;
-    padding: 12px 5px !important;
-    width: 100% !important;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start !important;
-  }
-  
-  /* Style individual filter buttons/pills for a gorgeous look */
-  .filter-container button, .categories button, .tags-row button, .btn-group button, .filters button, .filter-btn {
-    flex: 0 0 auto !important;
-    display: inline-block !important;
-  }
 
-  /* Force 2-Column Grid Layout with clear card distinction */
-  .tiles-container, .row, .gallery, .tile-grid, div[class*="grid"], div[class*="container"] {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 10px !important;
-  }
-
-  .tile-card, .card, div[class*="card"] {
-    width: 100% !important;
-    margin: 0 !important;
-    background: #1a1a1a !important;
-    border: 1px solid #333 !important;
-    border-radius: 10px !important;
-    overflow: hidden !important;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
-  }
-
-  /* Make tile images display clearly with proper sizing */
-  .tile-card img, .card img, div[class*="card"] img {
-    width: 100% !important;
-    height: 160px !important;
-    object-fit: cover !important;
-  }
-</style>
 
 <script>
   function filterTiles() {
@@ -286,121 +177,60 @@
         }
     </script>
 
-</body>
-</html>
+
+
+
+
 
 <style>
-  /* Search bar styling */
-  .search-container {
-    padding: 10px 15px;
-    background: #111;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  .filter-container, .categories, .tags-row, .btn-group, div[class*="filter"], div[class*="category"], .filters {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 10px !important;
+    padding: 12px 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch;
+    align-items: center !important;
   }
-  .search-input {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 25px;
-    border: 1px solid #444;
-    background: #222;
-    color: #fff;
-    font-size: 16px;
-    outline: none;
+  .filter-container::-webkit-scrollbar, .categories::-webkit-scrollbar, .filters::-webkit-scrollbar {
+    display: none;
   }
-
-  /* 2-Column Grid Layout */
-  .tile-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 10px;
+  .filter-container button, .categories button, .tags-row button, .btn-group button, .filters button, .filter-btn, .category-btn {
+    flex: 0 0 auto !important;
+    display: inline-block !important;
+    background: #1a1a1a !important;
+    border: 1.5px solid #d4af37 !important;
+    color: #d4af37 !important;
+    padding: 8px 18px !important;
+    border-radius: 25px !important;
+    font-size: 13px !important;
   }
-  
-  .tile-grid .tile-card {
-    width: 100%;
-    margin-bottom: 0;
-  }
-</style>
-
-<script>
-  function filterTiles() {
-    let input = document.getElementById('tileSearch').value.toLowerCase();
-    let cards = document.getElementsByClassName('tile-card');
-    
-    for (let i = 0; i < cards.length; i++) {
-      let title = cards[i].innerText.toLowerCase();
-      if (title.includes(input)) {
-        cards[i].style.display = "";
-      } else {
-        cards[i].style.display = "none";
-      }
-    }
-  }
-</script>
-
-<!-- Search Bar HTML -->
-
-
-<script>
-  // Ensure the main tile listing container uses the 2-column grid class automatically
-  window.addEventListener('DOMContentLoaded', (event) => {
-    let containers = document.querySelectorAll('.container, .gallery, .row, main');
-    containers.forEach(el => {
-      if (!el.classList.contains('tile-grid') && el.innerHTML.includes('tile-card')) {
-        el.classList.add('tile-grid');
-      }
-    });
-  });
-</script>
-
-<style>
-  .search-container {
-    padding: 15px;
-    background: #1a1a1a;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  }
-  .search-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 2px solid #333;
-    border-radius: 8px;
-    background: #2a2a2a;
-    color: #fff;
-    outline: none;
-  }
-  .search-input:focus {
-    border-color: #d4af37;
-  }
-  /* Force 2-Column Grid on Mobile and Desktop */
-  .tile-grid, .container, .gallery, .row {
+  .tiles-container, .row, .gallery, .tile-grid, div[class*="grid"], div[class*="container"] {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     padding: 10px !important;
   }
-  .tile-card, .card {
+  .tile-card, .card, div[class*="card"] {
     width: 100% !important;
     margin: 0 !important;
+    background: #181818 !important;
+    border: 2px solid #333 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.5) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .tile-card img, .card img, div[class*="card"] img {
+    width: 100% !important;
+    height: 150px !important;
+    object-fit: cover !important;
+    border-bottom: 2px solid #222 !important;
   }
 </style>
-
-<script>
-  function filterTiles() {
-    let input = document.getElementById('tileSearch').value.toLowerCase();
-    let cards = document.querySelectorAll('.tile-card, .card');
-    
-    cards.forEach(card => {
-      let text = card.innerText.toLowerCase();
-      if (text.includes(input)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-</script>
