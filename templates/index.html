@@ -184,14 +184,33 @@
 
 
 
+
+
 <style>
-  /* Structural layout only - keeping your original colors intact */
+  /* Match the dark luxury theme from the admin panel */
+  body {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+    font-family: Arial, sans-serif !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    padding-bottom: 50px !important;
+  }
+  
+  h1, h2, h3, .catalog-title {
+    color: #ffffff !important;
+  }
+
+  /* Horizontal Scrolling Filter Pills with Gold Accent */
   .filter-container, .categories, .tags-row, .filters {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     gap: 10px !important;
+    padding: 12px 5px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     -webkit-overflow-scrolling: touch;
     align-items: center !important;
   }
@@ -201,20 +220,51 @@
   .filter-container button, .categories button, .tags-row button, .filters button, .filter-btn, .category-btn {
     flex: 0 0 auto !important;
     display: inline-block !important;
+    background: #1a1a1a !important;
+    border: 1.5px solid #d4af37 !important;
+    color: #d4af37 !important;
+    padding: 8px 16px !important;
+    border-radius: 25px !important;
+    font-size: 13px !important;
   }
 
-  /* Strict 2-Column Grid for Tiles */
-  .tile-grid, .tiles-grid, .row-cols-2, #tile-grid {
+  /* Strict 2-Column Grid Layout */
+  .tile-grid, .tiles-grid, .row-cols-2, #tile-grid, .row {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    gap: 10px !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    padding: 5px 0 !important;
   }
-  
-  .tile-card img, .card img {
+
+  /* Tile Cards Styled Like the Admin Panel */
+  .tile-card, .card, div[class*="card"] {
     width: 100% !important;
-    height: 140px !important;
-    object-fit: cover !important;
+    margin: 0 !important;
+    background: #1a1a1a !important;
+    border: 1.5px solid #333 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure the full picture shows nicely in a compact square container */
+  .tile-card img, .card img, img[class*="tile"] {
+    width: 100% !important;
+    height: 120px !important;
+    object-fit: contain !important;
+    background-color: #000 !important;
+    border-bottom: 1px solid #333 !important;
+  }
+
+  /* Tile Text Details */
+  .tile-card .card-body, .tile-card p, .tile-card h5, div[class*="card"] div {
+    color: #ddd !important;
+    font-size: 12px !important;
+    padding: 6px !important;
   }
 </style>
