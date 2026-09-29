@@ -5,6 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mecks Prior Interiors - Luxury Tile Catalog</title>
     
+
+<style id="mecks-catalog-grid">
+  /* 2-COLUMN GRID CATALOG */
+  #tile-grid, .tile-grid, .tiles-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 5px 0 20px 0 !important;
+  }
+  .tile-card, .card {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    cursor: pointer !important;
+  }
+  .tile-card img, .card img {
+    width: 100% !important;
+    height: 125px !important;
+    object-fit: cover !important;
+  }
+  /* Hide extra text labels on main catalog grid cards */
+  .tile-card p:not(.price-text):not(.name), .tile-card span:not(.price), .tile-card div:not(.card-content) {
+    display: none !important;
+  }
+  /* Show only Name, Size, Price */
+  .tile-card h3, .tile-card h4, .tile-card .title, .tile-card .size, .tile-card .price {
+    display: block !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    padding: 4px 8px 0 8px !important;
+    margin: 0 !important;
+  }
+  .tile-card .price {
+    color: #2ecc71 !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    padding-bottom: 8px !important;
+  }
+</style>
+
 </head>
 <body>
 
