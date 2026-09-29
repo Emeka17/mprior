@@ -317,6 +317,38 @@
 
 
 
+
+
+<!-- Floating Cart Button -->
+<button id="floating-cart-btn" onclick="openCartView()">
+  🛒 Cart <span id="cart-counter">0</span>
+</button>
+
+<!-- Dedicated Detail View -->
+<div id="detail-view" class="full-screen-view">
+  <button class="nav-btn" onclick="closeDetailView()">← Back to Catalog</button>
+  <div id="detail-content"></div>
+  <div style="margin-top: 20px;">
+    <label style="color: #ffffff; font-weight: bold;">Required Quantity (sqm):</label>
+    <input type="number" id="sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCalculation()">
+    <p id="calc-total" style="color: #2ecc71; font-weight: bold; font-size: 16px; margin-top: 10px;"></p>
+    <button class="action-btn" onclick="addCurrentItemToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Dedicated Cart View -->
+<div id="cart-view" class="full-screen-view">
+  <button class="nav-btn" onclick="closeCartView()">← Back to Catalog</button>
+  <h2 style="color: #d4af37; border-bottom: 1px solid #333; padding-bottom: 10px;">Your Selected Cart Items</h2>
+  <div id="cart-items-container"></div>
+  <div id="cart-summary-section" style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
+    <h3 id="cart-grand-total" style="color: #2ecc71;">Grand Total: ₦0.00</h3>
+    <a id="cart-whatsapp-btn" class="whatsapp-order-btn" href="#" target="_blank">Order All via WhatsApp</a>
+  </div>
+</div>
+
+
+
 <style id="jiji-grid-style">
   body {
     background-color: #121212 !important;
@@ -338,7 +370,7 @@
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
-    padding: 5px 0 60px 0 !important;
+    padding: 5px 0 80px 0 !important;
   }
 
   .tile-card, .card {
@@ -359,12 +391,12 @@
     background: #000 !important;
   }
 
-  /* STRICTLY HIDE FINISH & USE ON MAIN GRID CARDS */
+  /* HIDE FINISH & USE ON CATALOG CARDS */
   .tile-card p, .tile-card span, .tile-card div {
     display: none !important;
   }
 
-  /* ALLOW ONLY: Name, Size, Price on Main Grid Card */
+  /* SHOW ONLY NAME, SIZE, PRICE ON CATALOG CARDS */
   .tile-card h3, .tile-card h4, .tile-card h5, .tile-card .title, .tile-card p.name,
   .tile-card .size, .tile-card .size-text,
   .tile-card .price, .tile-card span[class*="price"], .tile-card p.price-text {
@@ -387,22 +419,22 @@
     margin: 0 !important;
   }
 
-  /* FLOATING CART BUTTON (Bottom Right) */
+  /* FLOATING BUTTONS CONTAINER (Cart on right, WhatsApp on left/bottom-left) */
   #floating-cart-btn {
     position: fixed !important;
     bottom: 20px !important;
     right: 20px !important;
     background: #d4af37 !important;
     color: #121212 !important;
-    padding: 12px 20px !important;
+    padding: 12px 18px !important;
     border-radius: 30px !important;
     font-weight: bold !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important;
     z-index: 99998 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     cursor: pointer !important;
     border: none !important;
   }
@@ -410,14 +442,33 @@
   #cart-counter {
     background: #ffffff !important;
     color: #121212 !important;
-    padding: 2px 8px !important;
+    padding: 2px 7px !important;
     border-radius: 50% !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: bold !important;
   }
 
-  /* TRUE FULL-SCREEN VIEWS (Detail & Cart) */
-  .full-screen-view {
+  /* RESTORED PERMANENT WHATSAPP BUTTON */
+  #permanent-whatsapp-btn {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    background: #25d366 !important;
+    color: #ffffff !important;
+    padding: 12px 18px !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6) !important;
+    z-index: 99998 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+  }
+
+  /* FULL-SCREEN OVERLAYS (Detail & Cart) */
+  .app-fullscreen-view {
     display: none;
     position: fixed !important;
     top: 0 !important;
@@ -431,11 +482,11 @@
     box-sizing: border-box !important;
   }
 
-  .full-screen-view.active {
+  .app-fullscreen-view.active {
     display: block !important;
   }
 
-  .full-screen-view img {
+  .app-fullscreen-view img {
     width: 100% !important;
     max-height: 280px !important;
     object-fit: contain !important;
@@ -444,14 +495,14 @@
     border: 1px solid #333 !important;
   }
 
-  .full-screen-view h2, .full-screen-view h3 {
+  .app-fullscreen-view h2, .app-fullscreen-view h3 {
     color: #ffffff !important;
     font-size: 18px !important;
     margin-top: 15px !important;
     display: block !important;
   }
 
-  .full-screen-view p, .full-screen-view span, .full-screen-view div {
+  .app-fullscreen-view p, .app-fullscreen-view span, .app-fullscreen-view div {
     color: #cccccc !important;
     display: block !important;
     font-size: 14px !important;
@@ -459,7 +510,7 @@
     margin: 6px 0 !important;
   }
 
-  .full-screen-view .price, .full-screen-view span[class*="price"] {
+  .app-fullscreen-view .price, .app-fullscreen-view span[class*="price"] {
     color: #2ecc71 !important;
     font-weight: bold !important;
     font-size: 16px !important;
@@ -517,40 +568,45 @@
   }
 </style>
 
-<!-- Floating Cart Button -->
+<!-- Floating Cart Button (Right) -->
 <button id="floating-cart-btn" onclick="openCartView()">
   🛒 Cart <span id="cart-counter">0</span>
 </button>
 
+<!-- Restored Permanent WhatsApp Button (Left) -->
+<a id="permanent-whatsapp-btn" href="https://wa.me/2348124913382?text=Hello%20Mecks%20Prior%20Interiors,%20I%20am%20interested%20in%20your%20tiles." target="_blank">
+  💬 WhatsApp
+</a>
+
 <!-- Dedicated Detail View -->
-<div id="detail-view" class="full-screen-view">
+<div id="custom-detail-view" class="app-fullscreen-view">
   <button class="nav-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="detail-content"></div>
+  <div id="custom-detail-content"></div>
   <div style="margin-top: 20px;">
     <label style="color: #ffffff; font-weight: bold;">Required Quantity (sqm):</label>
-    <input type="number" id="sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCalculation()">
-    <p id="calc-total" style="color: #2ecc71; font-weight: bold; font-size: 16px; margin-top: 10px;"></p>
-    <button class="action-btn" onclick="addCurrentItemToCart()">Add to Cart</button>
+    <input type="number" id="custom-sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCustomCalculation()">
+    <p id="custom-calc-total" style="color: #2ecc71; font-weight: bold; font-size: 16px; margin-top: 10px;"></p>
+    <button class="action-btn" onclick="addCustomItemToCart()">Add to Cart</button>
   </div>
 </div>
 
 <!-- Dedicated Cart View -->
-<div id="cart-view" class="full-screen-view">
+<div id="custom-cart-view" class="app-fullscreen-view">
   <button class="nav-btn" onclick="closeCartView()">← Back to Catalog</button>
   <h2 style="color: #d4af37; border-bottom: 1px solid #333; padding-bottom: 10px;">Your Selected Cart Items</h2>
-  <div id="cart-items-container"></div>
-  <div id="cart-summary-section" style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
-    <h3 id="cart-grand-total" style="color: #2ecc71;">Grand Total: ₦0.00</h3>
-    <a id="cart-whatsapp-btn" class="whatsapp-order-btn" href="#" target="_blank">Order All via WhatsApp</a>
+  <div id="custom-cart-items-container"></div>
+  <div style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
+    <h3 id="custom-cart-grand-total" style="color: #2ecc71;">Grand Total: ₦0.00</h3>
+    <a id="custom-whatsapp-btn" class="whatsapp-order-btn" href="#" target="_blank">Order All via WhatsApp</a>
   </div>
 </div>
 
 <script id="jiji-script">
-  let cart = [];
-  let currentActiveTile = null;
+  let userCart = [];
+  let currentTileData = null;
 
   document.addEventListener("DOMContentLoaded", function() {
-    // 1. Clean Catalog Cards (Hide Finish/Use, ensure white name/size and green price)
+    // Clean catalog cards
     document.querySelectorAll('.tile-card, .card').forEach(card => {
       card.querySelectorAll('p, span, div').forEach(el => {
         let txt = el.textContent.trim();
@@ -564,16 +620,19 @@
         }
       });
 
-      // 2. Tap tile to open dedicated detail view
+      // Tap card to open detail view
       card.addEventListener('click', function() {
-        currentActiveTile = {
-          html: card.innerHTML,
-          name: (card.querySelector('h3, h4, h5, .title') ? card.querySelector('h3, h4, h5, .title').textContent.trim() : "Tile"),
-          priceVal: extractPrice(card.textContent)
+        let nameEl = card.querySelector('h3, h4, h5, .title, p.name') || card.querySelector('h3');
+        let tileName = nameEl ? nameEl.textContent.trim() : "Tile";
+        
+        currentTileData = {
+          name: tileName,
+          priceVal: extractCardPrice(card.textContent),
+          html: card.innerHTML
         };
 
-        const detailView = document.getElementById('detail-view');
-        const detailContent = document.getElementById('detail-content');
+        const detailView = document.getElementById('custom-detail-view');
+        const detailContent = document.getElementById('custom-detail-content');
         
         let cloned = card.cloneNode(true);
         cloned.querySelectorAll('*').forEach(child => {
@@ -588,64 +647,60 @@
         });
 
         detailContent.innerHTML = cloned.innerHTML;
-        document.getElementById('sqm-input').value = 1;
-        updateCalculation();
+        document.getElementById('custom-sqm-input').value = 1;
+        updateCustomCalculation();
 
-        document.querySelectorAll('body > *:not(#detail-view):not(#cart-view):not(#floating-cart-btn)').forEach(el => {
-          el.style.display = 'none';
-        });
         detailView.classList.add('active');
         window.scrollTo(0, 0);
       });
     });
   });
 
-  function extractPrice(text) {
+  function extractCardPrice(text) {
     let matches = text.match(/[₦N]\s*([0-9,]+\.?[0-9]*)/);
     if (matches) {
       return parseFloat(matches[1].replace(/,/g, ''));
     }
-    return 3850; // default fallback price
+    return 3850;
   }
 
-  function updateCalculation() {
-    let sqm = parseFloat(document.getElementById('sqm-input').value) || 1;
-    let total = sqm * (currentActiveTile ? currentActiveTile.priceVal : 3850);
-    document.getElementById('calc-total').textContent = "Total Cost: ₦" + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  function updateCustomCalculation() {
+    let sqm = parseFloat(document.getElementById('custom-sqm-input').value) || 1;
+    let total = sqm * (currentTileData ? currentTileData.priceVal : 3850);
+    document.getElementById('custom-calc-total').textContent = "Total Cost: ₦" + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
   }
 
-  function addCurrentItemToCart() {
-    if (!currentActiveTile) return;
-    let sqm = parseFloat(document.getElementById('sqm-input').value) || 1;
-    let unitPrice = currentActiveTile.priceVal;
+  function addCustomItemToCart() {
+    if (!currentTileData) return;
+    let sqm = parseFloat(document.getElementById('custom-sqm-input').value) || 1;
+    let unitPrice = currentTileData.priceVal;
     let totalCost = sqm * unitPrice;
 
-    cart.push({
-      name: currentActiveTile.name,
+    userCart.push({
+      name: currentTileData.name,
       sqm: sqm,
       unitPrice: unitPrice,
-      totalCost: totalCost,
-      html: currentActiveTile.html
+      totalCost: totalCost
     });
 
-    document.getElementById('cart-counter').textContent = cart.length;
-    alert("Added " + currentActiveTile.name + " (" + sqm + " sqm) to Cart!");
+    document.getElementById('cart-counter').textContent = userCart.length;
+    alert("Added " + currentTileData.name + " (" + sqm + " sqm) to Cart!");
     closeDetailView();
   }
 
   function openCartView() {
-    const cartContainer = document.getElementById('cart-items-container');
-    cartContainer.innerHTML = "";
+    const container = document.getElementById('custom-cart-items-container');
+    container.innerHTML = "";
 
-    if (cart.length === 0) {
-      cartContainer.innerHTML = "<p style='color: #888; text-align: center; padding: 30px;'>Your cart is empty.</p>";
-      document.getElementById('cart-grand-total').textContent = "Grand Total: ₦0.00";
-      document.getElementById('cart-whatsapp-btn').href = "#";
+    if (userCart.length === 0) {
+      container.innerHTML = "<p style='color: #888; text-align: center; padding: 30px;'>Your cart is empty.</p>";
+      document.getElementById('custom-cart-grand-total').textContent = "Grand Total: ₦0.00";
+      document.getElementById('custom-whatsapp-btn').href = "https://wa.me/2348124913382?text=Hello%20Mecks%20Prior%20Interiors,%20I%20want%20to%20inquire%20about%20your%20tiles.";
     } else {
       let grandTotal = 0;
       let whatsappText = "Hello Mecks Prior Interiors, I want to order these tiles:%0A";
 
-      cart.forEach((item, index) => {
+      userCart.forEach((item, index) => {
         grandTotal += item.totalCost;
         whatsappText += `%0A- ${item.name} (${item.sqm} sqm) @ ₦${item.totalCost.toLocaleString()}`;
 
@@ -655,43 +710,33 @@
           <h4 style="color:#fff; margin:0 0 5px 0;">${item.name}</h4>
           <p style="margin:2px 0; color:#ccc;">Quantity: <b>${item.sqm} sqm</b></p>
           <p style="margin:2px 0; color:#2ecc71; font-weight:bold;">Cost: ₦${item.totalCost.toLocaleString()}</p>
-          <button onclick="removeFromCart(${index})" style="background:#e74c3c; color:#fff; border:none; padding:5px 12px; border-radius:4px; margin-top:8px; cursor:pointer; font-size:12px;">Remove</button>
+          <button onclick="removeCartItem(${index})" style="background:#e74c3c; color:#fff; border:none; padding:5px 12px; border-radius:4px; margin-top:8px; cursor:pointer; font-size:12px;">Remove</button>
         `;
-        cartContainer.appendChild(div);
+        container.appendChild(div);
       });
 
-      document.getElementById('cart-grand-total').textContent = "Grand Total: ₦" + grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-      
+      document.getElementById('custom-cart-grand-total').textContent = "Grand Total: ₦" + grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       whatsappText += `%0A%0AGrand Total: ₦${grandTotal.toLocaleString()}`;
-      document.getElementById('cart-whatsapp-btn').href = `https://wa.me/2348124913382?text=${whatsappText}`;
+      document.getElementById('custom-whatsapp-btn').href = `https://wa.me/2348124913382?text=${whatsappText}`;
     }
 
-    document.querySelectorAll('body > *:not(#cart-view):not(#floating-cart-btn)').forEach(el => {
-      el.style.display = 'none';
-    });
-    document.getElementById('cart-view').classList.add('active');
+    document.getElementById('custom-cart-view').classList.add('active');
     window.scrollTo(0, 0);
   }
 
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    document.getElementById('cart-counter').textContent = cart.length;
+  function removeCartItem(index) {
+    userCart.splice(index, 1);
+    document.getElementById('cart-counter').textContent = userCart.length;
     openCartView();
   }
 
   function closeDetailView() {
-    document.getElementById('detail-view').classList.remove('active');
-    document.querySelectorAll('body > *').forEach(el => {
-      el.style.display = '';
-    });
+    document.getElementById('custom-detail-view').classList.remove('active');
     window.scrollTo(0, 0);
   }
 
   function closeCartView() {
-    document.getElementById('cart-view').classList.remove('active');
-    document.querySelectorAll('body > *').forEach(el => {
-      el.style.display = '';
-    });
+    document.getElementById('custom-cart-view').classList.remove('active');
     window.scrollTo(0, 0);
   }
 </script>
