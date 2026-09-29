@@ -7,6 +7,14 @@
     
 
 <style id="mecks-catalog-grid">
+  /* CLEAN 2-COLUMN GRID */
+  .grid, #tile-grid, .tile-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .card, .tile-card { background: #1a1a1a !important; border: 1px solid #333 !important; border-radius: 8px !important; }
+  /* Hide extra metadata on grid cards, keep Name, Size, Price */
+  .card div:nth-child(n+4), .card p, .card span:not(.price) { display: none !important; }
+  .card .card-title, .card h3, .card h4 { display: block !important; color: #fff !important; font-size: 12px !important; padding: 4px 8px 0 8px !important; }
+  .card .card-price, .card .price { display: block !important; color: #2ecc71 !important; font-weight: bold !important; font-size: 13px !important; padding: 4px 8px 8px 8px !important; }
+
   /* 2-COLUMN GRID CATALOG */
   #tile-grid, .tile-grid, .tiles-grid {
     display: grid !important;
@@ -55,15 +63,7 @@
 
 
 
-<style id="mecks-safe-mobile-modal">
-  /* Ensure detail view expands cleanly and behaves well on mobile */
-  .product-detail, .detail-view, #detail-container, .modal-dialog {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
-</style>
+
 
 </head>
 <body>
@@ -310,9 +310,7 @@
 
 
 <!-- Dedicated Full-Screen View Container -->
-<div id="full-detail-view">
-  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="detail-content-area"></div>
+
 </div>
 
 <script>
@@ -370,9 +368,7 @@
 
 
 <!-- Dedicated Full-Screen Detail View Container -->
-<div id="full-detail-view">
-  <button class="back-to-catalog-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="detail-content-area"></div>
+
 </div>
 
 
@@ -385,9 +381,7 @@
 </button>
 
 <!-- Dedicated Detail View -->
-<div id="detail-view" class="full-screen-view">
-  <button class="nav-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="detail-content"></div>
+
   <div style="margin-top: 20px;">
     <label style="color: #ffffff; font-weight: bold;">Required Quantity (sqm):</label>
     <input type="number" id="sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCalculation()">
@@ -639,9 +633,7 @@
 </a>
 
 <!-- Dedicated Detail View -->
-<div id="custom-detail-view" class="app-fullscreen-view">
-  <button class="nav-btn" onclick="closeDetailView()">← Back to Catalog</button>
-  <div id="custom-detail-content"></div>
+
   <div style="margin-top: 20px;">
     <label style="color: #ffffff; font-weight: bold;">Required Quantity (sqm):</label>
     <input type="number" id="custom-sqm-input" value="1" min="1" style="width: 100%; padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 6px; margin-top: 5px; box-sizing: border-box;" oninput="updateCustomCalculation()">
@@ -651,10 +643,7 @@
 </div>
 
 <!-- Dedicated Cart View -->
-<div id="custom-cart-view" class="app-fullscreen-view">
-  <button class="nav-btn" onclick="closeCartView()">← Back to Catalog</button>
-  <h2 style="color: #d4af37; border-bottom: 1px solid #333; padding-bottom: 10px;">Your Selected Cart Items</h2>
-  <div id="custom-cart-items-container"></div>
+
   <div style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
     <h3 id="custom-cart-grand-total" style="color: #2ecc71;">Grand Total: ₦0.00</h3>
     <a id="custom-whatsapp-btn" class="whatsapp-order-btn" href="#" target="_blank">Order All via WhatsApp</a>
