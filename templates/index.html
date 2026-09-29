@@ -186,29 +186,44 @@
 
 
 
+
+
 <style>
-  /* Match the dark luxury theme from the admin panel */
+  /* Base Theme */
   body {
     background-color: #121212 !important;
     color: #e0e0e0 !important;
     font-family: Arial, sans-serif !important;
     margin: 0 !important;
     padding: 10px !important;
-    padding-bottom: 50px !important;
-  }
-  
-  h1, h2, h3, .catalog-title {
-    color: #ffffff !important;
+    padding-bottom: 60px !important;
   }
 
-  /* Horizontal Scrolling Filter Pills with Gold Accent */
+  /* Brand Header & Subtitles */
+  h1, .brand-name, header h1, .catalog-header h1 {
+    color: #d4af37 !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    font-size: 24px !important;
+    margin-bottom: 5px !important;
+  }
+  p, .subtitle, .catalog-instruction {
+    color: #b0b0b0 !important;
+    text-align: center !important;
+    font-size: 13px !important;
+  }
+  a {
+    color: #d4af37 !important;
+  }
+
+  /* Horizontal Scrolling Filter Pills */
   .filter-container, .categories, .tags-row, .filters {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
-    gap: 10px !important;
-    padding: 12px 5px !important;
+    gap: 8px !important;
+    padding: 10px 5px !important;
     width: 100% !important;
     box-sizing: border-box !important;
     -webkit-overflow-scrolling: touch;
@@ -223,48 +238,63 @@
     background: #1a1a1a !important;
     border: 1.5px solid #d4af37 !important;
     color: #d4af37 !important;
-    padding: 8px 16px !important;
-    border-radius: 25px !important;
-    font-size: 13px !important;
+    padding: 7px 14px !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
   }
 
-  /* Strict 2-Column Grid Layout */
-  .tile-grid, .tiles-grid, .row-cols-2, #tile-grid, .row {
+  /* STRICT FORCED 2-COLUMN GRID */
+  #tile-grid, .tile-grid, .tiles-grid, .row, div[class*="grid"] {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    margin: 0 !important;
     padding: 5px 0 !important;
   }
 
-  /* Tile Cards Styled Like the Admin Panel */
+  /* Tile Cards */
   .tile-card, .card, div[class*="card"] {
     width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     background: #1a1a1a !important;
     border: 1.5px solid #333 !important;
     border-radius: 10px !important;
     overflow: hidden !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5) !important;
     display: flex !important;
     flex-direction: column !important;
     box-sizing: border-box !important;
   }
 
-  /* Ensure the full picture shows nicely in a compact square container */
-  .tile-card img, .card img, img[class*="tile"] {
+  /* Tile Image Container */
+  .tile-card img, .card img, img {
     width: 100% !important;
-    height: 120px !important;
-    object-fit: contain !important;
+    height: 130px !important;
+    object-fit: cover !important;
     background-color: #000 !important;
     border-bottom: 1px solid #333 !important;
   }
 
-  /* Tile Text Details */
-  .tile-card .card-body, .tile-card p, .tile-card h5, div[class*="card"] div {
-    color: #ddd !important;
+  /* Card Text Styling */
+  .tile-card h5, .tile-card p, .card-body, div[class*="card"] p {
+    color: #e0e0e0 !important;
     font-size: 12px !important;
-    padding: 6px !important;
+    padding: 4px 8px !important;
+    margin: 2px 0 !important;
+  }
+
+  /* VIBRANT GREEN PRICE */
+  .tile-card p:last-child, span[class*="price"], .price, td:has(N), div:has(> N) {
+    color: #2ecc71 !important;
+    font-weight: bold !important;
+  }
+  
+  /* Catch any text containing price Naira symbol */
+  *[contains(text(), '₦')] {
+    color: #2ecc71 !important;
+    font-weight: bold !important;
   }
 </style>
